@@ -1,20 +1,19 @@
 # Use an official node image as a base
 FROM node:18-alpine
 
-# Set the working directory
-WORKDIR /app
+ # This tells Docker to create a directory so that other commands will use it
+ WORKDIR /app
 
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
+ #Copy Our package.json and package-lock.json file into the app directory to tell node the module we want to use
+ COPY package.json /app
 
-# Install dependencies
-RUN npm install
+ #To install the dependencies inside our image
 
-# Copy the rest of the application code
-COPY . .
+ RUN npm install
 
-# Expose the port the app runs on
-EXPOSE 5173
+ # Copy everything from ourlocal directory to the image in the code directory
+ COPY . /app
 
-# Command to run the development server
-CMD ["npm", "run", "dev"]
+ # Navigate to the application entry point and run the image
+
+ CMD [ "npm", "run", "dev" ]

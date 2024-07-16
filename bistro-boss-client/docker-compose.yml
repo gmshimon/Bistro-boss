@@ -1,12 +1,11 @@
-version: '3'
 services:
-  vite-react-app:
-    build: .
-    ports:
-      - "5173:5173"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    command: sh -c "npm install && npm run dev"
+   client: #Define the client service so we can run it in an isolated environment.
+     stdin_open: true
+     build:
+       context: .
+       dockerfile: Dockerfile #The client service requires a docker file to be specified. For development, we’re going to use the Dockerfile.dev file.
+     ports:
+       - "3000:3000" #Next, we map the port 3000 to Docker. The React application runs on port 3000, so we need to tell Docker which port to expose for our application.
+     volumes:
+       - "/app/node_modules"
+       - "./:/app"
