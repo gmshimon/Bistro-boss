@@ -2,9 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import SectionTItle from '../SectionTitle/SectionTItle';
 import MenuItem from '../MenuItem/MenuItem';
+import { getMenuLists } from '../../Redux/Menu/menuSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PopularMenu = () => {
-    const [menu,setMenu] = useState([])
+    const {menu} = useSelector(state=>state.menu)
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(getMenuLists())
+    },[dispatch])
+    const popular = menu.filter(item =>item.category === 'popular');
+    /* const [menu,setMenu] = useState([])
     useEffect(()=>{
         fetch('menu.json')
         .then(res=>res.json())
@@ -12,13 +20,13 @@ const PopularMenu = () => {
             const popularItems = data.filter(item=>item.category === 'popular');
             setMenu(popularItems);
         })
-    },[])
+    },[]) */
     return (
         <section className='mb-12'>
             <SectionTItle heading="From Our Menu" subHeading="Popular Items"/>
             <div className='grid md:grid-cols-2 gap-10'>
                 {
-                    menu.map(item => <MenuItem key={item._id} item={item}/>)
+                    popular.map(item => <MenuItem key={item._id} item={item}/>)
                 }
             </div>
             <div className='flex justify-center mt-5'>
