@@ -3,27 +3,39 @@ import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import Cover from '../../Components/Cover/Cover'
 import banner from '../../assets/menu/banner3.jpg'
+import pizzaImg from '../../assets/menu/pizza-bg.jpg'
+import dessertImg from '../../assets/menu/dessert-bg.jpeg'
+import saladImg from '../../assets/menu/salad-bg.jpg'
+import soupImg from '../../assets/menu/soup-bg.jpg'
 import PopularMenu from '../../Components/PopularMenu/PopularMenu'
 import { useSelector, useDispatch } from 'react-redux'
-import { getMenuLists } from '../../Redux/Menu/menuSlice'
+import SectionTItle from '../../Components/SectionTitle/SectionTItle'
+import MenuCategory from '../../Components/MenuCategory/MenuCategory'
 
 const Menu = () => {
-    const {menu} = useSelector(state=>state.menu)
-    // const dispatch = useDispatch();
-    // useEffect(()=>{
-    //     dispatch(getMenuLists())
-    // },[dispatch])
+    const {menu} = useSelector(state=>state.menu) 
+    const desserts = menu.filter(item=>item.category ==="dessert").slice(0,5)
+    const soups = menu.filter(item=>item.category ==="soup")
+    const salads = menu.filter(item=>item.category ==="salad").slice(0,5)
+    const pizzas = menu.filter(item=>item.category ==="pizza").slice(0,5)
+    const offered = menu.filter(item=>item.category ==="offered").slice(0,5)
   return (
     <div>
       <Helmet>
         <title>Bistro Boss | Menu</title>
       </Helmet>
       <Cover img={banner} title={"Our Menu"} subtitle={"Would you like to try a dish?"}/>
-      <PopularMenu/>
-      <Cover img={banner}/>
-      <PopularMenu/>
-      <Cover img={banner}/>
-      <PopularMenu/>
+      <SectionTItle subHeading={"Don't Miss"} heading={"Today's Offer"}/>
+      {/* offered item section */}
+      <MenuCategory items={offered}/>
+      {/* dessert  */}
+      <MenuCategory items={desserts} title={"Desserts"} img={dessertImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."} />
+      {/* pizza section */}
+      <MenuCategory items={pizzas} title={"pizza"} img={pizzaImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}/>
+      {/* Salad section */}
+      <MenuCategory items={salads} title={"Salads"} img={saladImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}/>
+      {/* Soup section */}
+      <MenuCategory items={soups} title={"Soups"} img={soupImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}/>
     </div>
   )
 }
