@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     const navOptions = <>
@@ -57,20 +58,7 @@ const Navbar = () => {
               <a>Item 1</a>
             </li>
             <li>
-              <details>
-                <summary>Parent</summary>
-                <ul className='p-2'>
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <a>Item 3</a>
+              <Link to="/menu">Menu</Link>
             </li>
           </ul>
         </div>
