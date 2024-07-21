@@ -10,7 +10,10 @@ const Main = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getMenuLists())
-  }, [dispatch])
+    // fetch("http://localhost:5000/api/v1/menu")
+    // .then(res=>res.json())
+    // .then(data=>console.log(data))
+  }, [])
   return (
     <div>
       <Navbar></Navbar>

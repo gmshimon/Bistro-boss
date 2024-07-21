@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from 'axios';
 
 const initialState = {
     menu:[],
@@ -16,9 +17,8 @@ const initialState = {
 }
 
 export const getMenuLists = createAsyncThunk ("getMenuLists",async ()=>{
-    const result = await fetch('menu.json')
-    const data = result.json();
-    return data;
+    const response = await axios.get('http://localhost:5000/api/v1/menu')
+    return response.data.data;
 })
 
 const menuSlice = createSlice({
@@ -48,7 +48,7 @@ const menuSlice = createSlice({
         })
         .addCase(getMenuLists.fulfilled,(state,action)=>{
             state.menu = action.payload;
-            state.desserts = action.payload.filter(item=>item.category === 'dessert');
+            state.desserts = action?.payload?.filter(item=>item?.category === 'dessert');
             state.soups = action.payload.filter(item=>item.category ==='soup');
             state.salads = action.payload.filter(item=>item.category ==='salad');
             state.pizzas = action.payload.filter(item=>item.category ==='pizza');

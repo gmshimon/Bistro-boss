@@ -13,13 +13,13 @@ app.use(cors())
 app.use(express.json())
 
 //database connection
-mongoose.connect('mongodb://127.0.0.1:27017/bistroDb').then(() => {
+mongoose.connect('mongodb://localhost:27017/bistroDb').then(() => {
   console.log('Database connected successfully')
 })
 
 //Router
 const menuRouter = require('./Models/Menu/menu.route')
-
+const reviewRouter = require('./Models/Reviews/review.route')
 
 
 
@@ -30,4 +30,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log('Bistro Boss is listening on port ', port)
   app.use('/api/v1/menu',menuRouter)
+  app.use('/api/v1/review',reviewRouter)
 })
