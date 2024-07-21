@@ -7,13 +7,17 @@ import orderImg from '../../assets/shop/banner2.jpg'
 import { useSelector } from 'react-redux'
 import FoodCard from '../../Components/FoodCard/FoodCard'
 import OrderTab from '../../Components/FoodCard/OrderTab'
+import { useParams } from 'react-router-dom'
 
 const Order = () => {
   const { menu, desserts, soups, salads, pizzas, drinks } = useSelector(
     state => state.menu
   )
-  const [tabIndex, setTabIndex] = useState(0)
-
+  const categories = ['Salad', 'Pizza','Soup','Dessert','Drink']
+  const {category} = useParams()
+  const initialIndex = categories.indexOf(category)
+  const [tabIndex, setTabIndex] = useState(initialIndex||0)
+  console.log(category);
   return (
     <div>
       <Cover

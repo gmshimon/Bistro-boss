@@ -1,26 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SectionTItle from '../SectionTitle/SectionTItle';
 import MenuItem from '../MenuItem/MenuItem';
-import { getMenuLists } from '../../Redux/Menu/menuSlice';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { useSelector } from 'react-redux';
 
 const PopularMenu = () => {
-    const {menu} = useSelector(state=>state.menu)
-    const dispatch = useDispatch();
-    useEffect(()=>{
-        dispatch(getMenuLists())
-    },[dispatch])
-    const popular = menu.filter(item =>item.category === 'popular');
-    /* const [menu,setMenu] = useState([])
-    useEffect(()=>{
-        fetch('menu.json')
-        .then(res=>res.json())
-        .then(data=>{
-            const popularItems = data.filter(item=>item.category === 'popular');
-            setMenu(popularItems);
-        })
-    },[]) */
+    const {menu,popular} = useSelector(state=>state.menu)
     return (
         <section className='mb-12'>
             <SectionTItle heading="From Our Menu" subHeading="Popular Items"/>

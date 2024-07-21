@@ -9,6 +9,7 @@ const initialState = {
     pizzas:[],
     offered:[],
     drinks:[],
+    popular:[],
     isGetMenuLoading:false,
     isGetLoadingError:false,
     isGetLoadingSuccess:false,
@@ -32,6 +33,7 @@ const menuSlice = createSlice({
             state.pizzas=[];
             state.offered=[];
             state.drinks=[];
+            state.popular = [];
             state.isGetMenuLoading=false,
             state.isGetLoadingError=false,
             state.isGetLoadingSuccess=false
@@ -52,6 +54,7 @@ const menuSlice = createSlice({
             state.pizzas = action.payload.filter(item=>item.category ==='pizza');
             state.offered = action.payload.filter(item=>item.category ==='offered');
             state.drinks = action.payload.filter(item=>item.category ==='drinks');
+            state.popular = action.payload.filter(item=>item.category ==='popular');
             state.isGetMenuLoading = false;
             state.isGetLoadingSuccess = true;
             state.isGetMenuLoading = false;
