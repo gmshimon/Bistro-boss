@@ -13,29 +13,58 @@ import SectionTItle from '../../Components/SectionTitle/SectionTItle'
 import MenuCategory from '../../Components/MenuCategory/MenuCategory'
 
 const Menu = () => {
-    const {menu} = useSelector(state=>state.menu) 
-    const desserts = menu.filter(item=>item.category ==="dessert").slice(0,5)
-    const soups = menu.filter(item=>item.category ==="soup")
-    const salads = menu.filter(item=>item.category ==="salad").slice(0,5)
-    const pizzas = menu.filter(item=>item.category ==="pizza").slice(0,5)
-    const offered = menu.filter(item=>item.category ==="offered").slice(0,5)
+  const { menu, desserts, soups, salads, pizzas, offered } = useSelector(
+    state => state.menu
+  )
   return (
     <div>
       <Helmet>
         <title>Bistro Boss | Menu</title>
       </Helmet>
-      <Cover img={banner} title={"Our Menu"} subtitle={"Would you like to try a dish?"}/>
-      <SectionTItle subHeading={"Don't Miss"} heading={"Today's Offer"}/>
+      <Cover
+        img={banner}
+        title={'Our Menu'}
+        subtitle={'Would you like to try a dish?'}
+      />
+      <SectionTItle subHeading={"Don't Miss"} heading={"Today's Offer"} />
       {/* offered item section */}
-      <MenuCategory items={offered}/>
+      <MenuCategory items={offered} />
       {/* dessert  */}
-      <MenuCategory items={desserts} title={"Desserts"} img={dessertImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."} />
+      <MenuCategory
+        items={desserts.slice(0, 5)}
+        title={'Desserts'}
+        img={dessertImg}
+        subtitle={
+          'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+        }
+      />
       {/* pizza section */}
-      <MenuCategory items={pizzas} title={"pizza"} img={pizzaImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}/>
+      <MenuCategory
+        items={pizzas.slice(0, 5)}
+        title={'pizza'}
+        img={pizzaImg}
+        subtitle={
+          'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+        }
+      />
       {/* Salad section */}
-      <MenuCategory items={salads} title={"Salads"} img={saladImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}/>
+      <MenuCategory
+        items={salads.slice(0, 5)}
+        title={'Salads'}
+        img={saladImg}
+        subtitle={
+          'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+        }
+      />
       {/* Soup section */}
-      <MenuCategory items={soups} title={"Soups"} img={soupImg} subtitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}/>
+      <MenuCategory
+        items={soups.slice(0, 5)}
+        title={'Soups'}
+        img={soupImg}
+        subtitle={
+          'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+        }
+      />
     </div>
   )
 }
