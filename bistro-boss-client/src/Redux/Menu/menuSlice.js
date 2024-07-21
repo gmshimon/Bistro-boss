@@ -12,8 +12,8 @@ const initialState = {
     drinks:[],
     popular:[],
     isGetMenuLoading:false,
-    isGetLoadingError:false,
-    isGetLoadingSuccess:false,
+    isGetMenuError:false,
+    isGetMenuSuccess:false,
 }
 
 export const getMenuLists = createAsyncThunk ("getMenuLists",async ()=>{
@@ -35,16 +35,16 @@ const menuSlice = createSlice({
             state.drinks=[];
             state.popular = [];
             state.isGetMenuLoading=false,
-            state.isGetLoadingError=false,
-            state.isGetLoadingSuccess=false
+            state.isGetMenuError=false,
+            state.isGetMenuSuccess=false
         }
     },
     extraReducers:(builder)=>{
         builder
         .addCase(getMenuLists.pending,(state,action)=>{
             state.isGetMenuLoading = true;
-            state.isGetLoadingSuccess = false;
-            state.isGetLoadingError = false;
+            state.isGetMenuSuccess = false;
+            state.isGetMenuError = false;
         })
         .addCase(getMenuLists.fulfilled,(state,action)=>{
             state.menu = action.payload;
@@ -56,12 +56,12 @@ const menuSlice = createSlice({
             state.drinks = action.payload.filter(item=>item.category ==='drinks');
             state.popular = action.payload.filter(item=>item.category ==='popular');
             state.isGetMenuLoading = false;
-            state.isGetLoadingSuccess = true;
+            state.isGetMenuSuccess = true;
             state.isGetMenuLoading = false;
         })
         .addCase(getMenuLists.rejected,(state,action)=>{
-            state.isGetLoadingError = true;
-            state.isGetLoadingSuccess = false;
+            state.isGetMenuError = true;
+            state.isGetMenuSuccess = false;
             state.isGetMenuLoading = false;
         })
     }
