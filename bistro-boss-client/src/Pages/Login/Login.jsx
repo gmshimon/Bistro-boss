@@ -9,7 +9,7 @@ import loginBg from '../../assets/others/authentication.png'
 import loginImg from '../../assets/others/authentication2.png'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { loginUser } from '../../Redux/Slice/AuthSlice'
+// import { loginUser } from '../../Redux/Slice/AuthSlice'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const Login = () => {
     const form = e.target
     const email = form.email.value
     const password = form.password.value
-    dispatch(loginUser(email, password))
+    // dispatch(loginUser(email, password))
     console.log(email, password)
   }
   const handleValidateCaptcha = ()=> {
@@ -36,14 +36,14 @@ const Login = () => {
   }
 
   return (
-    <section className='flex items-center justify-center min-h-screen '>
+    <section className='flex items-center justify-center min-h-screen'>
       <div
         style={{
           backgroundImage: `url("${loginBg}")`
         }}
-        className='lg:h-[600px] h-full w-full max-w-full'
+        className='lg:h-[600px] h-full w-full max-w-full rounded-lg shadow-md'
       >
-        <div className='h-full  flex flex-col lg:flex-row justify-around items-center'>
+        <div className='h-full flex flex-col lg:flex-row justify-around items-center'>
           <div>
             <img src={loginImg} alt='' />
           </div>
