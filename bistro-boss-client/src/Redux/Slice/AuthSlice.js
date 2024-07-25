@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { createUserWithEmailAndPassword, signInWithCredential, signOut, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth'
 import auth from '../../firebase/firebase.config'
 
 const initialState = {
@@ -17,7 +17,7 @@ const initialState = {
 export const loginUser = createAsyncThunk(
   'loginUser',
   async ({ email, password }) => {
-    const response = await signInWithCredential(auth, email, password)
+    const response = await signInWithEmailAndPassword(auth, email, password)
     return response.user
   }
 )
@@ -69,6 +69,7 @@ const AuthSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoginLoading = false
         state.isLoginError = true
+        console.log(action.error)
         state.isLoginSuccess = false
       })
       .addCase(createUser.pending, state => {

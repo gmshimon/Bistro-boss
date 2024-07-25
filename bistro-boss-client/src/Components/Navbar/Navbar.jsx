@@ -1,27 +1,29 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { logout } from '../../Redux/Slice/AuthSlice'
 
 const Navbar = () => {
-    const navOptions = <>
-        <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Parent</a>
-                <ul className='p-2'>
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
+  const {user} = useSelector(state=>state.auth)
+  const dispatch = useDispatch()
+  const navOptions = (
+    <>
+      <li>
+        <Link to='/menu'>Menu</Link>
+      </li>
+      <li>
+        <Link to='/order/Salad'>Order</Link>
+      </li>
+      {
+        user?.email? <li onClick={()=>dispatch(logout())}>
+        <Link>Logout</Link>
+      </li> :<li>
+        <Link to='/login'>Login</Link>
+      </li>
+      }
     </>
+  )
   return (
     <>
       <div className='navbar max-w-screen-xl fixed z-10 bg-opacity-30 bg-black text-white'>
@@ -43,27 +45,13 @@ const Navbar = () => {
                 />
               </svg>
             </div>
-            <ul
-              tabIndex={0}
-              className='menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow'
-            >
-              {navOptions}
-            </ul>
           </div>
-          <a className='btn btn-ghost text-xl'><Link to="/">BISTRO BOSS</Link></a>
+          <a className='btn btn-ghost text-xl'>
+            <Link to='/'>BISTRO BOSS</Link>
+          </a>
         </div>
         <div className='navbar-center hidden lg:flex'>
-          <ul className='menu menu-horizontal px-1'>
-            <li>
-              <Link to="/menu">Menu</Link>
-            </li>
-            <li>
-              <Link to="/order/Salad">Order</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
+          <ul className='menu menu-horizontal px-1'>{navOptions}</ul>
         </div>
         <div className='navbar-end'>
           <a className='btn'>Button</a>

@@ -9,6 +9,7 @@ import loginBg from '../../assets/others/authentication.png'
 import loginImg from '../../assets/others/authentication2.png'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { loginUser } from '../../Redux/Slice/AuthSlice'
 // import { loginUser } from '../../Redux/Slice/AuthSlice'
 
 const Login = () => {
@@ -23,7 +24,7 @@ const Login = () => {
     const form = e.target
     const email = form.email.value
     const password = form.password.value
-    // dispatch(loginUser(email, password))
+    dispatch(loginUser({email, password}))
     console.log(email, password)
   }
   const handleValidateCaptcha = ()=> {
