@@ -3,89 +3,102 @@ import React, { useEffect, useState } from 'react'
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
   validateCaptcha
 } from 'react-simple-captcha'
+import loginBg from '../../assets/others/authentication.png'
+import loginImg from '../../assets/others/authentication2.png'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginUser } from '../../Redux/Slice/AuthSlice'
 
 const Login = () => {
-    const [user_captcha,setCaptcha] = useState('')
-    const [disabled,setDisabled] = useState(true)
-    useEffect(()=>{
-        loadCaptchaEnginge(6); 
-    },[])
+  const dispatch = useDispatch()
+  const [user_captcha, setCaptcha] = useState('')
+  const [disabled, setDisabled] = useState(true)
+  useEffect(() => {
+    loadCaptchaEnginge(7)
+  }, [])
   const handSubmitForm = e => {
     e.preventDefault()
     const form = e.target
     const email = form.email.value
     const password = form.password.value
-    console.log(email)
+    dispatch(loginUser(email, password))
+    console.log(email, password)
   }
-
-  const handleValidateCaptcha = () =>{
-      if(validateCaptcha(user_captcha)){
-        setDisabled(false)
-    }else{
-        setDisabled(true)
+  const handleValidateCaptcha = ()=> {
+    if (validateCaptcha(user_captcha)) {
+      setDisabled(false)
+      loadCaptchaEnginge(7)
+    } else {
+      setDisabled(true)
     }
   }
+
   return (
-    <div className='hero bg-base-200 min-h-screen'>
-      <div className='hero-content flex-col lg:flex-row-reverse'>
-        <div className='text-center w-1/2 lg:text-left'>
-          <h1 className='text-5xl font-bold'>Login now!</h1>
-          <p className='py-6'>
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-        </div>
-        <div className='card bg-base-100 w-1/2 max-w-sm  shadow-2xl'>
-          <form onSubmit={handSubmitForm} className='card-body'>
-            <div className='form-control'>
-              <label className='label'>
-                <span className='label-text'>Email</span>
-              </label>
-              <input
-                name='email'
-                type='email'
-                placeholder='email'
-                className='input input-bordered'
-                required
-              />
-            </div>
-            <div className='form-control'>
-              <label className='label'>
-                <span className='label-text'>Password</span>
-              </label>
-              <input
-                name='password'
-                type='password'
-                placeholder='password'
-                className='input input-bordered'
-                required
-              />
-            </div>
-            <div className='form-control'>
-              <label className='label'>
-              <LoadCanvasTemplate />
-              </label>
-              <input
-              name='captcha'
-                type='text'
-                placeholder='PLease write the above captch'
-                className='input input-bordered'
-                onChange={e=>setCaptcha(e.target.value)}
-                required
-              />
-              <button type='button' onClick={handleValidateCaptcha} className='btn btn-outline btn-xs mt-2'>Validate</button>
-            </div>
-            <div className='form-control mt-6'>
-              <input disabled={disabled} type='submit' className='btn btn-primary' value='Login' />
-            </div>
-          </form>
+    <section className='flex items-center justify-center min-h-screen '>
+      <div
+        style={{
+          backgroundImage: `url("${loginBg}")`
+        }}
+        className='lg:h-[600px] h-full w-full max-w-full'
+      >
+        <div className='h-full  flex flex-col lg:flex-row justify-around items-center'>
+          <div>
+            <img src={loginImg} alt='' />
+          </div>
+          <div>
+            <h1 className='text-4xl font-bold text-center'>Login</h1>
+            <form className='pr-5 w-full' onSubmit={ handSubmitForm}>
+              <div className='my-4'>
+                <label htmlFor='email'>Email</label>
+                <input
+                  name='email'
+                  type='text'
+                  placeholder='Type here'
+                  className='input input-bordered w-full max-w-xs mt-2'
+                />
+              </div>
+              <div className='mb-5'>
+                <label htmlFor='password'>Password</label>
+                <input
+                  name='password'
+                  type='password'
+                  placeholder='Enter your password'
+                  className='input input-bordered w-full max-w-xs'
+                />
+              </div>
+              <div className='mb-5'>
+                <LoadCanvasTemplate />
+                <input
+                  onChange={e => setCaptcha(e.target.value)}
+                  name='captcha'
+                  type='text'
+                  placeholder='Type here'
+                  className='input input-bordered w-full max-w-xs mt-4'
+                />
+               <div className='flex justify-center mt-2'>
+               <button type='button' onClick={handleValidateCaptcha} className="btn btn-xs btn-outline w-full">Validate</button>
+               </div>
+
+              </div>
+              <div>
+                <button
+                  disabled={disabled}
+                  className='btn btn-warning w-full'
+                  type='submit'
+                >
+                  Login
+                </button>
+              </div>
+              <div className='text-center mt-3 hover:underline underline-offset-2 hover:cursor-pointer'>
+                <Link to="/register"><span className='text-orange-400'>New here? Create a New Account</span></Link>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

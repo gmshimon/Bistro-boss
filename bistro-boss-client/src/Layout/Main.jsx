@@ -4,7 +4,10 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Footer from '../Components/Footer/Footer'
 import Navbar from '../Components/Navbar/Navbar'
 import { useDispatch } from 'react-redux'
-import { getMenuLists } from '../Redux/Menu/menuSlice'
+import { getMenuLists } from '../Redux/Slice/menuSlice'
+import { onAuthStateChanged } from 'firebase/auth'
+import auth from '../firebase/firebase.config'
+import { setUser, toggleLoading } from '../Redux/Slice/AuthSlice'
 
 const Main = () => {
   const dispatch = useDispatch()
@@ -15,6 +18,15 @@ const Main = () => {
     // fetch("http://localhost:5000/api/v1/menu")
     // .then(res=>res.json())
     // .then(data=>console.log(data))
+
+    onAuthStateChanged(auth,(user)=>{
+      console.log("User: " + user)
+      if(user){
+        dispatch(setUser(user?.email))
+      }else{
+        dispatch(toggleLoading())
+      }
+    })
   }, [])
   return (
     <div>

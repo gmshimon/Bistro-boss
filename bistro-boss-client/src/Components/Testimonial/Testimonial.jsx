@@ -7,8 +7,8 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
 import SectionTItle from '../SectionTitle/SectionTItle'
-import { getReview } from '../../Redux/Review/ReviewSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { getReview } from '../../Redux/Slice/ReviewSlice'
 
 const Testimonial = () => {
   // const [reviews, setReviews] = useState([])
@@ -16,9 +16,6 @@ const Testimonial = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getReview())
-   /*  fetch('reviews.json')
-      .then(res => res.json())
-      .then(data => setReviews(data)) */
   }, [dispatch])
   return (
     <section className='my-20'>

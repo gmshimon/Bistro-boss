@@ -1,10 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
-import menuSlice from './Menu/menuSlice';
-import reviewSlice from './Review/ReviewSlice'
+import menuSlice from './Slice/menuSlice';
+import reviewSlice from './Slice/ReviewSlice'
+import authSlice from './Slice/AuthSlice';
+
 const store = configureStore  ({
     reducer:{
         menu:menuSlice,
-        review:reviewSlice
+        review:reviewSlice,
+        auth:authSlice
     }
 })
 
