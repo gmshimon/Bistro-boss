@@ -12,7 +12,7 @@ import auth from '../firebase/firebase.config'
 const Main = () => {
   const dispatch = useDispatch()
   const location = useLocation()
-  const isLoginPage = location.pathname.includes("login")
+  const isLoginPage = location.pathname.includes("login") || location.pathname.includes("register")
   useEffect(() => {
     dispatch(getMenuLists())
     // fetch("http://localhost:5000/api/v1/menu")
