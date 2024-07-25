@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { createUserWithEmailAndPassword, signInWithCredential, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithCredential, signOut, updateProfile } from 'firebase/auth'
 import auth from '../../firebase/firebase.config'
 
 const initialState = {
@@ -22,8 +22,12 @@ export const loginUser = createAsyncThunk(
   }
 )
 
-export const createUser = createAsyncThunk('createUser', async ({ email, password }) => {
+export const createUser = createAsyncThunk('createUser', async ( {name,email, password} ) => {
+    console.log(email,password)
     const response = await createUserWithEmailAndPassword(auth,email, password)
+    const result = updateProfile(auth.currentUser,{
+        displayName:name
+    })
     return response.user
   
 })
@@ -33,7 +37,7 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     reset: state => {
-      (state.isLoginLoading = false),
+        (state.isLoginLoading = false),
         (state.isLoginError = false),
         (state.isLoginSuccess = false),
         state.isCreateUserLoading= false;
@@ -76,9 +80,11 @@ const AuthSlice = createSlice({
         state.isCreateUserError = false
         state.isCreateUserSuccess = true
         state.isCreateUserLoading = false
+        console.log(action.payload)
         state.user = action.payload
       })
       .addCase(createUser.rejected, (state, action) => {
+        console.log(action.error)
         state.isCreateUserLoading = false
         state.isCreateUserError = true
         state.isCreateUserSuccess = false
