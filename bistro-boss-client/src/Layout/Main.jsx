@@ -17,10 +17,6 @@ const Main = () => {
   const isLoginPage = location.pathname.includes("login") || location.pathname.includes("register")
   useEffect(() => {
     dispatch(getMenuLists())
-    // fetch("http://localhost:5000/api/v1/menu")
-    // .then(res=>res.json())
-    // .then(data=>console.log(data))
-
     onAuthStateChanged(auth,(user)=>{
       console.log("User: " + user)
       if(user){
@@ -31,7 +27,6 @@ const Main = () => {
       }
     })
   }, [dispatch])
-  console.log(isLoading)
   return (
     <div>
       {

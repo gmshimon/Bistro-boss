@@ -2,7 +2,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { logout } from '../../Redux/Slice/AuthSlice'
+import { logOut, logout } from '../../Redux/Slice/AuthSlice'
 
 const Navbar = () => {
   const {user} = useSelector(state=>state.auth)
@@ -19,7 +19,7 @@ const Navbar = () => {
         <Link to='/secret'>Secret</Link>
       </li>
       {
-        user?.email? <li onClick={()=>dispatch(logout())}>
+        user?.email? <li onClick={()=>dispatch(logOut())}>
         <Link>Logout</Link>
       </li> :<li>
         <Link to='/login'>Login</Link>

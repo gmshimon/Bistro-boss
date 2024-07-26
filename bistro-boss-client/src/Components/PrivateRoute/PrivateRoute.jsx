@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import loading from '../../assets/others/loader2.gif'
 
 const PrivateRoute = ({children}) => {
     const {user,isLoading} = useSelector(state=>state.auth)
+    const location = useLocation();
 
     if(isLoading){
         return <div>
@@ -18,7 +19,7 @@ const PrivateRoute = ({children}) => {
     }
 
     return (
-        <Navigate to="/login"/>
+        <Navigate to="/login" state={{from:location}} replace/>
     );
 };
 

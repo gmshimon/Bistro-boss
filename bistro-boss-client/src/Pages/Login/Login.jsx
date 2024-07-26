@@ -7,27 +7,38 @@ import {
 } from 'react-simple-captcha'
 import loginBg from '../../assets/others/authentication.png'
 import loginImg from '../../assets/others/authentication2.png'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { loginUser } from '../../Redux/Slice/AuthSlice'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser, reset } from '../../Redux/Slice/AuthSlice'
 // import { loginUser } from '../../Redux/Slice/AuthSlice'
 
 const Login = () => {
+  const {isLoginSuccess ,isLoginLoading} = useSelector(state=>state.auth)
   const dispatch = useDispatch()
   const [user_captcha, setCaptcha] = useState('')
   const [disabled, setDisabled] = useState(true)
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   useEffect(() => {
     loadCaptchaEnginge(7)
-  }, [])
+    if(isLoginSuccess){
+      dispatch(reset())
+      navigate(from,{replace:true})
+    }else{
+      // dispatch(reset())
+    }
+  }, [dispatch, from, isLoginSuccess, navigate])
+
   const handSubmitForm = e => {
     e.preventDefault()
     const form = e.target
     const email = form.email.value
     const password = form.password.value
-    dispatch(loginUser({email, password}))
-    console.log(email, password)
+    dispatch(loginUser({ email, password }))
   }
-  const handleValidateCaptcha = ()=> {
+  const handleValidateCaptcha = () => {
     if (validateCaptcha(user_captcha)) {
       setDisabled(false)
       loadCaptchaEnginge(7)
@@ -35,7 +46,6 @@ const Login = () => {
       setDisabled(true)
     }
   }
-
   return (
     <section className='flex items-center justify-center min-h-screen'>
       <div
@@ -50,7 +60,7 @@ const Login = () => {
           </div>
           <div>
             <h1 className='text-4xl font-bold text-center'>Login</h1>
-            <form className='pr-5 w-full' onSubmit={ handSubmitForm}>
+            <form className='pr-5 w-full' onSubmit={handSubmitForm}>
               <div className='my-4'>
                 <label htmlFor='email'>Email</label>
                 <input
@@ -78,14 +88,19 @@ const Login = () => {
                   placeholder='Type here'
                   className='input input-bordered w-full max-w-xs mt-4'
                 />
-               <div className='flex justify-center mt-2'>
-               <button type='button' onClick={handleValidateCaptcha} className="btn btn-xs btn-outline w-full">Validate</button>
-               </div>
-
+                <div className='flex justify-center mt-2'>
+                  <button
+                    type='button'
+                    onClick={handleValidateCaptcha}
+                    className='btn btn-xs btn-outline w-full'
+                  >
+                    Validate
+                  </button>
+                </div>
               </div>
               <div>
                 <button
-                  disabled={disabled}
+                  // disabled={disabled}
                   className='btn btn-warning w-full'
                   type='submit'
                 >
@@ -93,7 +108,11 @@ const Login = () => {
                 </button>
               </div>
               <div className='text-center mt-3 hover:underline underline-offset-2 hover:cursor-pointer'>
-                <Link to="/register"><span className='text-orange-400'>New here? Create a New Account</span></Link>
+                <Link to='/register'>
+                  <span className='text-orange-400'>
+                    New here? Create a New Account
+                  </span>
+                </Link>
               </div>
             </form>
           </div>

@@ -30,7 +30,10 @@ export const createUser = createAsyncThunk('createUser', async ( {name,email, pa
         displayName:name
     })
     return response.user
-  
+})
+export const logOut = createAsyncThunk('logOut', async (  ) => {
+    const response = await signOut(auth)
+    return response
 })
 
 const AuthSlice = createSlice({
@@ -38,9 +41,9 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     reset: state => {
-        (state.isLoginLoading = false),
-        (state.isLoginError = false),
-        (state.isLoginSuccess = false),
+        state.isLoginLoading = false,
+        state.isLoginError = false,
+        state.isLoginSuccess = false,
         state.isCreateUserLoading= false;
         state.isCreateUserError= false;
         state.isCreateUserSuccess= false;
@@ -94,6 +97,13 @@ const AuthSlice = createSlice({
         state.isCreateUserLoading = false
         state.isCreateUserError = true
         state.isCreateUserSuccess = false
+      })
+      .addCase(logOut.fulfilled, (state, action) => {
+        state.user = null
+        console.log('User logged out')
+      })
+      .addCase(logOut.rejected, (state, action) => {
+        console.log(action.error)
       })
   }
 })
