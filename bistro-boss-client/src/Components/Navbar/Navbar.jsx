@@ -15,6 +15,9 @@ const Navbar = () => {
       <li>
         <Link to='/order/Salad'>Order</Link>
       </li>
+      <li>
+        <Link to='/secret'>Secret</Link>
+      </li>
       {
         user?.email? <li onClick={()=>dispatch(logout())}>
         <Link>Logout</Link>

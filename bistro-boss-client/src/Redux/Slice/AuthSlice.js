@@ -6,6 +6,7 @@ import auth from '../../firebase/firebase.config'
 
 const initialState = {
   user: null,
+  isLoading:true,
   isLoginLoading: false,
   isLoginError: false,
   isLoginSuccess: false,
@@ -44,7 +45,11 @@ const AuthSlice = createSlice({
         state.isCreateUserError= false;
         state.isCreateUserSuccess= false;
     },
+    startLoading:(state,action)=>{
+        state.isLoading = action.payload
+    },
     setUser: (state, action) => {
+        state.isLoading = false
       state.user = action.payload
     },
     logout: async (state, action) => {
@@ -93,5 +98,5 @@ const AuthSlice = createSlice({
   }
 })
 
-export const { reset, setUser,logout } = AuthSlice.actions
+export const { reset, setUser,logout,startLoading } = AuthSlice.actions
 export default AuthSlice.reducer
