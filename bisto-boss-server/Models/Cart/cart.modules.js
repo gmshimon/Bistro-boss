@@ -12,6 +12,10 @@ const cartSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please provide the email of the user']
     },
+    name:{
+        type: String,
+        required:[true, 'Please provide the name of the food']
+    },
     image: {
       type: String
     },

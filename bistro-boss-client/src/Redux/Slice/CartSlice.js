@@ -13,6 +13,9 @@ const initialState = {
     // isCartUpdateLoading:false,
     // isCartUpdateSuccess:false,
     // isCartUpdateError:false,
+    isCartDeleteLoading:false,
+    isCartDeleteSuccess:false,
+    isCartDeleteError:false,
 }
 
 export const addToCart = createAsyncThunk('addToCart', async (item) => {
@@ -23,6 +26,11 @@ export const addToCart = createAsyncThunk('addToCart', async (item) => {
 export const getCartItems = createAsyncThunk('getCartItems', async (email) => {
     const response = await axios.get(`/cart/?email=${email}`)
     return response.data.data
+})
+
+export const deleteCartItems = createAsyncThunk('deleteCartItems',async(itemId) => {
+    const response = await axios.delete(`/cart/?itemId=${itemId}`)
+    return [response.data.data,itemId]
 })
 
 const cartSlice = createSlice({
@@ -36,6 +44,9 @@ const cartSlice = createSlice({
             state.isCartGetLoading=false;
             state.isCartGetSuccess=false;
             state.isCartGetError=false;
+            state.isCartDeleteLoading=false;
+            state.isCartDeleteSuccess=false;
+            state.isCartDeleteError=false;
         },
     },
     extraReducers:(builder)=>{
@@ -71,6 +82,23 @@ const cartSlice = createSlice({
             state.isCartGetError = true;
             state.isCartGetLoading = false;
             state.isCartCreateSuccess = false;
+            console.log(action.error)
+        })
+        .addCase(deleteCartItems.pending, (state, action) => {
+            state.isCartDeleteLoading = true;
+            state.isCartDeleteSuccess = false;
+            state.isCartDeleteError = false;
+        })
+        .addCase(deleteCartItems.fulfilled,(state, action) => {
+            state.isCartDeleteSuccess = true;
+            state.cartItems = state.cartItems.filter(item=>item._id!== action.payload[1])
+            state.isCartDeleteLoading = false;
+            state.isCartDeleteError = false;
+        })
+        .addCase(deleteCartItems.rejected,(state,action)=>{
+            state.isCartDeleteError = true;
+            state.isCartDeleteLoading = false;
+            state.isCartDeleteSuccess = false;
             console.log(action.error)
         })
     }

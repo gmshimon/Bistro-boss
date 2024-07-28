@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { addToCart, resetCart } from '../../Redux/Slice/CartSlice'
 
 const FoodCard = ({ item }) => {
-  const { name, image, price, recipe,_id } = item
+  const { name, image, price, recipe, _id } = item
   const { user } = useSelector(state => state.auth)
   const { isCartCreateSuccess } = useSelector(state => state.cart)
 
@@ -23,17 +23,17 @@ const FoodCard = ({ item }) => {
         price
       }
       dispatch(addToCart(cartItem))
-      if(isCartCreateSuccess){
+      if (isCartCreateSuccess) {
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Food has been added successfully",
+          position: 'top-end',
+          icon: 'success',
+          title: 'Food has been added successfully',
           showConfirmButton: false,
           timer: 2000
-        });
+        })
         dispatch(resetCart())
       }
-    }else{
+    } else {
       Swal.fire({
         title: 'You are logged in',
         text: 'Please login to add the food to cart',
@@ -44,7 +44,7 @@ const FoodCard = ({ item }) => {
         confirmButtonText: 'Yes, Login!'
       }).then(result => {
         if (result.isConfirmed) {
-          navigate('/login',{state:{from:location}})
+          navigate('/login', { state: { from: location } })
         }
       })
     }

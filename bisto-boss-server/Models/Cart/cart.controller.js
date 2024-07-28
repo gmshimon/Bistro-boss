@@ -37,3 +37,22 @@ module.exports.postCartItems = async (req, res, next) => {
     })
   }
 }
+
+// controller and service to delete a Cart item
+
+module.exports.deleteCartItems = async (req, res, next) => {
+  try {
+    const {itemId} = req.query
+    const result = await Cart.deleteOne({_id: itemId})
+    res.status(200).json({
+      status: 'Success',
+      message: 'Cart Item successfully deleted',
+      data: result
+    })
+  } catch (error) {
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Fail to delete Cart Item'
+    })
+  }
+}
