@@ -52,7 +52,7 @@ const AuthSlice = createSlice({
         state.isLoading = action.payload
     },
     setUser: (state, action) => {
-        state.isLoading = false
+      state.isLoading = false
       state.user = action.payload
     },
     logout: async (state, action) => {

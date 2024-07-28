@@ -1,17 +1,39 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { addToCart, resetCart } from '../../Redux/Slice/CartSlice'
 
 const FoodCard = ({ item }) => {
-  const { name, image, price, recipe } = item
+  const { name, image, price, recipe,_id } = item
   const { user } = useSelector(state => state.auth)
-  console.log(user);
-  const navigate = useNavigate()
+  const { isCartCreateSuccess } = useSelector(state => state.cart)
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
   const handleFoodItem = () => {
-    if (!user && !user?.email) {
+    if (user && user?.email) {
+      const cartItem = {
+        menuID: _id,
+        user: user?.email,
+        name,
+        image,
+        price
+      }
+      dispatch(addToCart(cartItem))
+      if(isCartCreateSuccess){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Food has been added successfully",
+          showConfirmButton: false,
+          timer: 2000
+        });
+        dispatch(resetCart())
+      }
+    }else{
       Swal.fire({
         title: 'You are logged in',
         text: 'Please login to add the food to cart',
@@ -22,7 +44,7 @@ const FoodCard = ({ item }) => {
         confirmButtonText: 'Yes, Login!'
       }).then(result => {
         if (result.isConfirmed) {
-          navigate('/login')
+          navigate('/login',{state:{from:location}})
         }
       })
     }

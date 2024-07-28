@@ -1,13 +1,19 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logOut, logout } from '../../Redux/Slice/AuthSlice'
 import { BsCart3 } from "react-icons/bs";
+import { getCartItems } from '../../Redux/Slice/CartSlice';
+
 
 const Navbar = () => {
   const { user } = useSelector(state => state.auth)
+  const { cartItems } = useSelector(state => state.cart)
   const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(getCartItems(user?.email))
+  },[dispatch, user?.email])
   const navOptions = (
     <>
       <li>
@@ -23,7 +29,7 @@ const Navbar = () => {
         <Link to='/'>
           {/* <button className='btn'> */}
           <BsCart3 />
-            <div className='badge badge-secondary'>+0</div>
+            <div className='badge badge-secondary'>+{cartItems?.length}</div>
           {/* </button> */}
         </Link>
       </li>
