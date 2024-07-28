@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import 'react-tabs/style/react-tabs.css'
+import 'react-tabs/style/react-tabs.css';
 import Cover from '../../Components/Cover/Cover'
 import orderImg from '../../assets/shop/banner2.jpg'
 import { useSelector } from 'react-redux'

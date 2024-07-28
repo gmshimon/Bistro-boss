@@ -3,9 +3,10 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logOut, logout } from '../../Redux/Slice/AuthSlice'
+import { BsCart3 } from "react-icons/bs";
 
 const Navbar = () => {
-  const {user} = useSelector(state=>state.auth)
+  const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const navOptions = (
     <>
@@ -18,13 +19,23 @@ const Navbar = () => {
       <li>
         <Link to='/secret'>Secret</Link>
       </li>
-      {
-        user?.email? <li onClick={()=>dispatch(logOut())}>
-        <Link>Logout</Link>
-      </li> :<li>
-        <Link to='/login'>Login</Link>
+      <li>
+        <Link to='/'>
+          {/* <button className='btn'> */}
+          <BsCart3 />
+            <div className='badge badge-secondary'>+0</div>
+          {/* </button> */}
+        </Link>
       </li>
-      }
+      {user?.email ? (
+        <li onClick={() => dispatch(logOut())}>
+          <Link>Logout</Link>
+        </li>
+      ) : (
+        <li>
+          <Link to='/login'>Login</Link>
+        </li>
+      )}
     </>
   )
   return (

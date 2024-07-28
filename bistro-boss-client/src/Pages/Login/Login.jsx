@@ -10,7 +10,7 @@ import loginImg from '../../assets/others/authentication2.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser, reset } from '../../Redux/Slice/AuthSlice'
-// import { loginUser } from '../../Redux/Slice/AuthSlice'
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const {isLoginSuccess ,isLoginLoading} = useSelector(state=>state.auth)
@@ -25,6 +25,13 @@ const Login = () => {
     loadCaptchaEnginge(7)
     if(isLoginSuccess){
       dispatch(reset())
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Successfully logged in",
+        showConfirmButton: false,
+        timer: 3000
+      });
       navigate(from,{replace:true})
     }else{
       // dispatch(reset())
