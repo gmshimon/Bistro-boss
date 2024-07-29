@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { ObjectId } = require('mongodb')
+const validate = require('validator')
 
 const userSchema = mongoose.Schema({
     name:{
@@ -19,7 +20,9 @@ const userSchema = mongoose.Schema({
         enum: ['admin', 'user'],
         default: 'user'
     }
+},{
+    timestamps: true
 })
 
 const Users = mongoose.model('Users',userSchema)
-export default Users
+module.exports = Users

@@ -12,7 +12,7 @@ import { MdOutlineMenu, MdOutlineRateReview } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMenuLists } from '../Redux/Slice/menuSlice'
 import { onAuthStateChanged } from 'firebase/auth'
-import { setUser, startLoading } from '../Redux/Slice/AuthSlice'
+import { saveUserData, setUser, startLoading } from '../Redux/Slice/AuthSlice'
 import auth from '../firebase/firebase.config'
 
 const Dashboard = () => {
@@ -23,7 +23,11 @@ const Dashboard = () => {
         onAuthStateChanged(auth,(user)=>{
           console.log("User: " + user)
           if(user){
-            dispatch(setUser(user))
+            dispatch(saveUserData({
+              name:user?.displayName,
+              email:user?.email,
+            }))
+            // dispatch(setUser(user))
           }else{
             dispatch(startLoading(false))
             // dispatch(toggleLoading())

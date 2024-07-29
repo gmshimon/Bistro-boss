@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getMenuLists } from '../Redux/Slice/menuSlice'
 import { onAuthStateChanged } from 'firebase/auth'
 import auth from '../firebase/firebase.config'
-import { setUser, startLoading } from '../Redux/Slice/AuthSlice'
+import { saveUserData, setUser, startLoading } from '../Redux/Slice/AuthSlice'
 // import { setUser, toggleLoading } from '../Redux/Slice/AuthSlice'
 
 const Main = () => {
@@ -20,7 +20,11 @@ const Main = () => {
     onAuthStateChanged(auth,(user)=>{
       console.log("User: " + user)
       if(user){
-        dispatch(setUser(user))
+        dispatch(saveUserData({
+          name:user?.displayName,
+          email:user?.email,
+        }))
+        // dispatch(setUser(user))
       }else{
         dispatch(startLoading(false))
         // dispatch(toggleLoading())

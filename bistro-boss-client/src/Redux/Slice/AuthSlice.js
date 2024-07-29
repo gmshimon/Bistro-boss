@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
 import auth from '../../firebase/firebase.config'
+import axios from '../../utilis/axios'
 
 const initialState = {
   user: null,
@@ -12,7 +12,13 @@ const initialState = {
   isLoginSuccess: false,
   isCreateUserLoading: false,
   isCreateUserError: false,
-  isCreateUserSuccess: false
+  isCreateUserSuccess: false,
+  isLoginWithGoogleLoading: false,
+  isLoginWithGoogleSuccess: false,
+  isLoginWithGoogleError: false,
+  isGetUserDataLoading: false,
+  isGetUserDataSuccess: false,
+  isGetUserDataError: false,
 }
 
 export const loginUser = createAsyncThunk(
@@ -31,6 +37,18 @@ export const createUser = createAsyncThunk('createUser', async ( {name,email, pa
     })
     return response.user
 })
+
+export const loginWithGoogle = createAsyncThunk('loginWithGoogle',async()=>{
+  const provider = new GoogleAuthProvider()
+  const response = await signInWithPopup(auth, provider)
+  return response.user
+})
+
+export const saveUserData = createAsyncThunk('saveUserData', async(userData)=>{
+  const response = await axios.post('/user',userData)
+  return response.data.data
+})
+
 export const logOut = createAsyncThunk('logOut', async (  ) => {
     const response = await signOut(auth)
     return response
@@ -47,6 +65,12 @@ const AuthSlice = createSlice({
         state.isCreateUserLoading= false;
         state.isCreateUserError= false;
         state.isCreateUserSuccess= false;
+        state.isLoginWithGoogleLoading=false;
+        state.isLoginWithGoogleSuccess=false;
+        state.isLoginWithGoogleError=false;
+        state.isGetUserDataLoading=false;
+        state.isGetUserDataSuccess=false;
+        state.isGetUserDataError=false;
     },
     startLoading:(state,action)=>{
         state.isLoading = action.payload
@@ -69,7 +93,7 @@ const AuthSlice = createSlice({
         state.isLoginSuccess = false
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload
+        state.user = action.payload.email
         state.isLoginLoading = false
         state.isLoginSuccess = true
         state.isLoginError = false
@@ -90,7 +114,7 @@ const AuthSlice = createSlice({
         state.isCreateUserSuccess = true
         state.isCreateUserLoading = false
         console.log(action.payload)
-        state.user = action.payload
+        state.user = action.payload.email
       })
       .addCase(createUser.rejected, (state, action) => {
         console.log(action.error)
@@ -104,6 +128,39 @@ const AuthSlice = createSlice({
       })
       .addCase(logOut.rejected, (state, action) => {
         console.log(action.error)
+      })
+      .addCase(loginWithGoogle.pending, state => {
+        state.isLoginWithGoogleLoading = true
+        state.isLoginWithGoogleError = false
+        state.isLoginWithGoogleSuccess = false
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.user = action.payload.email
+        state.isLoginWithGoogleLoading = false
+        state.isLoginWithGoogleSuccess = true
+        state.isLoginWithGoogleError = false
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.isLoginWithGoogleLoading = false
+        state.isLoginWithGoogleError = true
+        console.log(action.error)
+        state.isLoginWithGoogleSuccess = false
+      })
+      .addCase(saveUserData.pending,(state, action) =>{
+        state.isGetUserDataLoading = true;
+        state.isGetUserDataSuccess = false;
+        state.isGetUserDataError = false;
+      })
+      .addCase(saveUserData.fulfilled, (state, action) => {
+        state.isGetUserDataSuccess = true;
+        state.isGetUserDataLoading = false;
+        state.isGetUserDataError = false;
+        state.user = action.payload;
+      })
+      .addCase(saveUserData.rejected, (state,action) => {
+        state.isGetUserDataSuccess = false;
+        state.isGetUserDataLoading = false;
+        state.isGetUserDataError = true;
       })
   }
 })

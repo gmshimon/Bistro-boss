@@ -125,7 +125,7 @@ const Login = () => {
               <div className='flex justify-center mt-2'>
                 <div>
                   <p>Or Sign in with</p>
-                  <SocialMedia />
+                  <SocialMedia from={from} />
                 </div>
               </div>
             </form>
