@@ -6,7 +6,9 @@ import {
   FaCalendar,
   FaHome,
   FaList,
-  FaShoppingCart
+  FaShoppingCart,
+  FaUsers,
+  FaUtensils
 } from 'react-icons/fa'
 import { MdOutlineMenu, MdOutlineRateReview } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,59 +18,98 @@ import { saveUserData, setUser, startLoading } from '../Redux/Slice/AuthSlice'
 import auth from '../firebase/firebase.config'
 
 const Dashboard = () => {
-    const { cartItems } = useSelector(state => state.cart)
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getMenuLists())
-        onAuthStateChanged(auth,(user)=>{
-          console.log("User: " + user)
-          if(user){
-            dispatch(saveUserData({
-              name:user?.displayName,
-              email:user?.email,
-            }))
-            // dispatch(setUser(user))
-          }else{
-            dispatch(startLoading(false))
-            // dispatch(toggleLoading())
-          }
-        })
-      }, [dispatch])
+  const { cartItems } = useSelector(state => state.cart)
+  const { user } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getMenuLists())
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        dispatch(
+          saveUserData({
+            name: user?.displayName,
+            email: user?.email
+          })
+        )
+        // dispatch(setUser(user))
+      } else {
+        dispatch(startLoading(false))
+        // dispatch(toggleLoading())
+      }
+    })
+  }, [dispatch])
   return (
     <div className='flex'>
       <div className='w-64 min-h-screen bg-orange-400'>
         <ul className='menu'>
-          <li>
-            <NavLink to='/dashboard/user-home'>
-              <FaHome />
-              User Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/dashboard/reservation'>
-              <FaCalendar />
-              Reservation
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/dashboard/cart'>
-              <FaShoppingCart />
-              My Cart ({cartItems.length})
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/dashboard/my-review'>
-              <MdOutlineRateReview />
-              Add Review
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/dashboard/my-booking'>
-              <FaList />
-              My Bookings
-            </NavLink>
-          </li>
-          <div className="divider"></div>
+          {user?.role === 'admin' ? (
+            <>
+            <li>
+              <NavLink to='/dashboard/admin-home'>
+                <FaHome />
+                Admin Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/dashboard/admin-add-items'>
+                <FaUtensils/>
+                Add Items
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/dashboard/admin-manage-items'>
+                <FaList/>
+                Manage Items
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/dashboard/admin-manage-bookings'>
+                <FaBook />
+                Manage Bookings
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/dashboard/all-user'>
+              <FaUsers />
+                All Users
+              </NavLink>
+            </li>
+          </>
+          ) : (
+            <>
+              <li>
+                <NavLink to='/dashboard/user-home'>
+                  <FaHome />
+                  User Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to='/dashboard/reservation'>
+                  <FaCalendar />
+                  Reservation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to='/dashboard/cart'>
+                  <FaShoppingCart />
+                  My Cart ({cartItems.length})
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to='/dashboard/my-review'>
+                  <MdOutlineRateReview />
+                  Add Review
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to='/dashboard/my-booking'>
+                  <FaList />
+                  My Bookings
+                </NavLink>
+              </li>
+            </>
+          )}
+          <div className='divider'></div>
           <li>
             <NavLink to='/'>
               <FaHome />
@@ -77,7 +118,7 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink to='/menu'>
-            <MdOutlineMenu />
+              <MdOutlineMenu />
               Menu
             </NavLink>
           </li>

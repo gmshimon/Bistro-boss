@@ -25,6 +25,11 @@ const Navbar = () => {
       <li>
         <Link to='/secret'>Secret</Link>
       </li>
+      {
+        user?.role==="admin" && <li>
+        <Link to='/dashboard/all-user'>Admin</Link>
+      </li>
+      }
       <li>
         <Link to='/dashboard/cart'>
           {/* <button className='btn'> */}

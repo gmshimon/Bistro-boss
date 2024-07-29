@@ -155,12 +155,14 @@ const AuthSlice = createSlice({
         state.isGetUserDataSuccess = true;
         state.isGetUserDataLoading = false;
         state.isGetUserDataError = false;
+        state.isLoading = false
         state.user = action.payload;
       })
       .addCase(saveUserData.rejected, (state,action) => {
         state.isGetUserDataSuccess = false;
         state.isGetUserDataLoading = false;
         state.isGetUserDataError = true;
+        state.isLoading = false
       })
   }
 })
