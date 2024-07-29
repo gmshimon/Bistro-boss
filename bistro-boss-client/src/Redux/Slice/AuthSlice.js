@@ -6,6 +6,7 @@ import axios from '../../utilis/axios'
 
 const initialState = {
   user: null,
+  users:[],
   isLoading:true,
   isLoginLoading: false,
   isLoginError: false,
@@ -16,9 +17,12 @@ const initialState = {
   isLoginWithGoogleLoading: false,
   isLoginWithGoogleSuccess: false,
   isLoginWithGoogleError: false,
-  isGetUserDataLoading: false,
-  isGetUserDataSuccess: false,
-  isGetUserDataError: false,
+  isSaveUserDataLoading: false,
+  isSaveUserDataSuccess: false,
+  isSaveUserDataError: false,
+  isGetUsersLoading: false,
+  isGetUsersSuccess: false,
+  isGetUsersError: false,
 }
 
 export const loginUser = createAsyncThunk(
@@ -49,6 +53,11 @@ export const saveUserData = createAsyncThunk('saveUserData', async(userData)=>{
   return response.data.data
 })
 
+export const getAllUsers = createAsyncThunk('getAllUsers', async()=>{
+  const response = await axios.get('/user')
+  return response.data.data
+})
+
 export const logOut = createAsyncThunk('logOut', async (  ) => {
     const response = await signOut(auth)
     return response
@@ -68,9 +77,12 @@ const AuthSlice = createSlice({
         state.isLoginWithGoogleLoading=false;
         state.isLoginWithGoogleSuccess=false;
         state.isLoginWithGoogleError=false;
-        state.isGetUserDataLoading=false;
-        state.isGetUserDataSuccess=false;
-        state.isGetUserDataError=false;
+        state.isSaveUserDataLoading=false;
+        state.isSaveUserDataSuccess=false;
+        state.isSaveUserDataError=false;
+        state.isGetUsersLoading=false;
+        state.isGetUsersSuccess=false;
+        state.isGetUsersError=false;
     },
     startLoading:(state,action)=>{
         state.isLoading = action.payload
@@ -147,22 +159,38 @@ const AuthSlice = createSlice({
         state.isLoginWithGoogleSuccess = false
       })
       .addCase(saveUserData.pending,(state, action) =>{
-        state.isGetUserDataLoading = true;
-        state.isGetUserDataSuccess = false;
-        state.isGetUserDataError = false;
+        state.isSaveUserDataLoading = true;
+        state.isSaveUserDataSuccess = false;
+        state.isSaveUserDataError = false;
       })
       .addCase(saveUserData.fulfilled, (state, action) => {
-        state.isGetUserDataSuccess = true;
-        state.isGetUserDataLoading = false;
-        state.isGetUserDataError = false;
+        state.isSaveUserDataSuccess = true;
+        state.isSaveUserDataLoading = false;
+        state.isSaveUserDataError = false;
         state.isLoading = false
         state.user = action.payload;
       })
       .addCase(saveUserData.rejected, (state,action) => {
-        state.isGetUserDataSuccess = false;
-        state.isGetUserDataLoading = false;
-        state.isGetUserDataError = true;
+        state.isSaveUserDataSuccess = false;
+        state.isSaveUserDataLoading = false;
+        state.isSaveUserDataError = true;
         state.isLoading = false
+      })
+      .addCase(getAllUsers.pending, (state, action) => {
+        state.isGetUsersLoading = true
+        state.isGetUsersSuccess = false
+        state.isGetUsersError = false
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.users = action.payload
+        state.isGetUsersLoading = false
+        state.isGetUsersSuccess = true
+        state.isGetUsersError = false
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.isGetUsersLoading = false
+        state.isGetUsersSuccess = false
+        state.isGetUsersError = true
       })
   }
 })
