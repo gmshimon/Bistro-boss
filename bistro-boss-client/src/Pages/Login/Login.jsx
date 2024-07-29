@@ -11,29 +11,30 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser, reset } from '../../Redux/Slice/AuthSlice'
 import Swal from 'sweetalert2'
+import SocialMedia from '../../Components/SocialMedia/SocialMedia'
 
 const Login = () => {
-  const {isLoginSuccess ,isLoginLoading} = useSelector(state=>state.auth)
+  const { isLoginSuccess, isLoginLoading } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const [user_captcha, setCaptcha] = useState('')
   const [disabled, setDisabled] = useState(true)
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
   useEffect(() => {
     loadCaptchaEnginge(7)
-    if(isLoginSuccess){
+    if (isLoginSuccess) {
       dispatch(reset())
       Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Successfully logged in",
+        position: 'top-end',
+        icon: 'success',
+        title: 'Successfully logged in',
         showConfirmButton: false,
         timer: 3000
-      });
-      navigate(from,{replace:true})
-    }else{
+      })
+      navigate(from, { replace: true })
+    } else {
       // dispatch(reset())
     }
   }, [dispatch, from, isLoginSuccess, navigate])
@@ -59,7 +60,7 @@ const Login = () => {
         style={{
           backgroundImage: `url("${loginBg}")`
         }}
-        className='lg:h-[600px] h-full w-full max-w-full rounded-lg shadow-md'
+        className='lg:h-[650px] h-full w-full max-w-full rounded-lg shadow-md'
       >
         <div className='h-full flex flex-col lg:flex-row justify-around items-center'>
           <div>
@@ -120,6 +121,12 @@ const Login = () => {
                     New here? Create a New Account
                   </span>
                 </Link>
+              </div>
+              <div className='flex justify-center mt-2'>
+                <div>
+                  <p>Or Sign in with</p>
+                  <SocialMedia />
+                </div>
               </div>
             </form>
           </div>

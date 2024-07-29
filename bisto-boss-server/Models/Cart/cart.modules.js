@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { ObjectId, Timestamp } = require('mongodb')
+const { ObjectId } = require('mongodb')
 
 const cartSchema = mongoose.Schema(
   {

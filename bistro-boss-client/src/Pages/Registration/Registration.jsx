@@ -11,6 +11,7 @@ import Loading from '../../assets/others/loader3.gif'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { createUser, reset } from '../../Redux/Slice/AuthSlice'
+import SocialMedia from '../../Components/SocialMedia/SocialMedia'
 
 const Registration = () => {
   const { user, isCreateUserLoading, isCreateUserSuccess } = useSelector(
@@ -44,7 +45,7 @@ const Registration = () => {
           style={{
             backgroundImage: `url("${loginBg}")`
           }}
-          className='lg:h-[600px] h-full w-full max-w-full rounded-lg shadow-md'
+          className='lg:h-[650px] h-full w-full max-w-full rounded-lg shadow-md'
         >
           <div className='h-full flex flex-col lg:flex-row-reverse justify-around items-center'>
             <div>
@@ -93,6 +94,12 @@ const Registration = () => {
                     </span>
                   </Link>
                 </div>
+                <div className='flex justify-center mt-2'>
+                <div>
+                  <p>Or Sign in with</p>
+                  <SocialMedia />
+                </div>
+              </div>
               </form>
             </div>
           </div>
