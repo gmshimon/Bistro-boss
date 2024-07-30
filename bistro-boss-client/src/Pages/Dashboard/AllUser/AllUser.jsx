@@ -8,7 +8,7 @@ import { getAllUsers } from '../../../Redux/Slice/AuthSlice'
 import { FaUsers } from 'react-icons/fa'
 
 const AllUser = () => {
-  const {  users } = useSelector(state => state.auth)
+  const { users } = useSelector(state => state.auth)
   const { cartItems, isCartDeleteSuccess } = useSelector(state => state.cart)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -22,7 +22,7 @@ const AllUser = () => {
         <div className='overflow-x-auto pl-10'>
           <table className='table'>
             {/* head */}
-            <thead>
+            <thead className='bg-orange-600 text-white text-1xl'>
               <tr>
                 <th>#</th>
                 <th>NAME</th>
@@ -39,6 +39,7 @@ const AllUser = () => {
                   <td>{item?.email}</td>
                   <td>
                     <button
+                      disabled={item?.role === 'admin'}
                       // onClick={() => handleDeleteItem(item._id)}
                       className='btn btn-warning'
                     >
