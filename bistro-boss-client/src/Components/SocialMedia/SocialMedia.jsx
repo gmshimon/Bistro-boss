@@ -16,7 +16,7 @@ const SocialMedia = ({from}) => {
                 name:user?.displayName,
                 email:user?.email
             }
-            dispatch(saveUserData(userInfo))
+            dispatch(saveUserData(userInfo));
             dispatch(reset())
             Swal.fire({
               position: 'top-end',
@@ -29,7 +29,7 @@ const SocialMedia = ({from}) => {
           } else {
             // dispatch(reset())
           }
-    },[isLoginWithGoogleSuccess, dispatch, navigate, from, user?.displayName, user?.email])
+    },[isLoginWithGoogleSuccess, dispatch, navigate, from, user])
     return (
     <div className='flex justify-center mt-2'>
         <button onClick={()=>dispatch(loginWithGoogle())} type='button' className="btn btn-circle btn-outline">

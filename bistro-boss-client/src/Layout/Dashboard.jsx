@@ -12,13 +12,36 @@ import {
 } from 'react-icons/fa'
 import { MdOutlineMenu, MdOutlineRateReview } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import CurrentUser from '../utilis/CurrentUser'
+import { getMenuLists } from '../Redux/Slice/menuSlice'
+import { onAuthStateChanged } from 'firebase/auth'
+import { saveUserData, setUser, startLoading } from '../Redux/Slice/AuthSlice'
+import auth from '../firebase/firebase.config'
 
 const Dashboard = () => {
   const { cartItems } = useSelector(state => state.cart)
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
-  CurrentUser()
+  useEffect(() => {
+    dispatch(getMenuLists())
+    onAuthStateChanged(auth, user => {
+      if (user?.email) {
+        console.log({
+          name: user?.displayName,
+          email: user?.email
+        })
+        dispatch(
+          saveUserData({
+            name: user?.displayName,
+            email: user?.email
+          })
+        )
+        // dispatch(setUser(user))
+      } else {
+        dispatch(startLoading(false))
+        // dispatch(toggleLoading())
+      }
+    })
+  }, [dispatch])
   return (
     <div className='flex'>
       <div className='w-64 min-h-screen bg-orange-400'>

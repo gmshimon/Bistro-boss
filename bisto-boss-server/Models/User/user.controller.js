@@ -1,3 +1,4 @@
+const { generateToken } = require('../../Utilis/token')
 const Users = require('./user.modules')
 
 module.exports.createUser = async (req, res) => {
@@ -7,17 +8,22 @@ module.exports.createUser = async (req, res) => {
     const user = await Users.findOne({ email })
 
     if (user) {
+      const token = generateToken(user)
+      
       res.status(200).send({
         status: 'Success',
         message: 'User already exists',
-        data: user
+        data: user,
+        token: token
       })
     } else {
       const result = await Users.create(userData)
+      const token = generateToken(result)
       res.status(200).json({
         status: 'Success',
         message: 'User created successfully',
-        data: result
+        data: result,
+        token: token
       })
     }
   } catch (error) {

@@ -50,7 +50,9 @@ export const loginWithGoogle = createAsyncThunk('loginWithGoogle',async()=>{
 
 export const saveUserData = createAsyncThunk('saveUserData', async(userData)=>{
   const response = await axios.post('/user',userData)
-  return response.data.data
+  const data = response.data.data
+  data.token = response.data.token
+  return data
 })
 
 export const getAllUsers = createAsyncThunk('getAllUsers', async()=>{
@@ -147,7 +149,7 @@ const AuthSlice = createSlice({
         state.isLoginWithGoogleSuccess = false
       })
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
-        state.user = action.payload.email
+        state.user = action.payload
         state.isLoginWithGoogleLoading = false
         state.isLoginWithGoogleSuccess = true
         state.isLoginWithGoogleError = false
