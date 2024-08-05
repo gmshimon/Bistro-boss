@@ -10,7 +10,7 @@ const menuSchema = mongoose.Schema({
   recipe: {
     type: String,
     required: [true, 'Please provide the recipe'],
-    minLength: [50, 'Recipe must be at least 50 characters']
+    minLength: [5, 'Recipe must be at least 5 characters']
   },
   image: {
     type: String,

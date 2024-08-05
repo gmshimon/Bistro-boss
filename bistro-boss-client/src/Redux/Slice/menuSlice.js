@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
+import axios from '../../utilis/axios'
 
 const initialState = {
     menu:[],
@@ -14,29 +14,35 @@ const initialState = {
     isGetMenuLoading:false,
     isGetMenuError:false,
     isGetMenuSuccess:false,
+    isCreateMenuLoading:false,
+    isCreateMenuError:false,
+    isCreateMenuSuccess:false,
 }
 
 export const getMenuLists = createAsyncThunk ("getMenuLists",async ()=>{
-    const response = await axios.get('http://localhost:5000/api/v1/menu')
+    const response = await axios.get('/menu')
     return response.data.data;
 })
 
+export const addMenuItem = createAsyncThunk ("addMenuItem",async (data)=>{
+    const response = await axios.post('/menu',data,{
+        headers: {
+            'authorization': 'Bearer ' + localStorage.getItem('access_token'),
+        },
+    })
+    return response.data;
+})
 const menuSlice = createSlice({
     name: 'menu',
     initialState,
     reducers:{
         reset:(state)=>{
-            state.menu = [],
-            state.desserts=[];
-            state.soups=[];
-            state.salads=[];
-            state.pizzas=[];
-            state.offered=[];
-            state.drinks=[];
-            state.popular = [];
             state.isGetMenuLoading=false,
             state.isGetMenuError=false,
-            state.isGetMenuSuccess=false
+            state.isGetMenuSuccess=false,
+            state.isCreateMenuLoading=false,
+            state.isCreateMenuError=false,
+            state.isCreateMenuSuccess=false
         }
     },
     extraReducers:(builder)=>{
@@ -63,6 +69,21 @@ const menuSlice = createSlice({
             state.isGetMenuError = true;
             state.isGetMenuSuccess = false;
             state.isGetMenuLoading = false;
+        })
+        .addCase(addMenuItem.pending,(state,action)=>{
+            state.isCreateMenuLoading = true;
+            state.isCreateMenuSuccess = false;
+            state.isCreateMenuError = false;
+        })
+        .addCase(addMenuItem.fulfilled,(state,action)=>{
+            state.isCreateMenuSuccess = true;
+            state.isCreateMenuLoading = false;
+            state.isCreateMenuError = false;
+        })
+        .addCase(addMenuItem.rejected,(state,action)=>{
+            state.isCreateMenuError = true;
+            state.isCreateMenuLoading = false;
+            console.log(action.error)
         })
     }
 })
