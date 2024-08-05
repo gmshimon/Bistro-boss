@@ -20,7 +20,7 @@ const initialState = {
 }
 
 export const getMenuLists = createAsyncThunk ("getMenuLists",async ()=>{
-    const response = await axios.get('/menu')
+    const response = await axios.get('/menu?page=&limit=')
     return response.data.data;
 })
 

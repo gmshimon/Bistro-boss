@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-import SectionTItle from '../../Components/SectionTitle/SectionTItle'
 import { FaUtensils } from 'react-icons/fa'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { addMenuItem, reset } from '../../Redux/Slice/menuSlice'
+import { addMenuItem, reset } from '../../../Redux/Slice/menuSlice'
 import Swal from 'sweetalert2'
+import SectionTItle from '../../../Components/SectionTitle/SectionTItle'
 
 const image_hosting = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_url = `https://api.imgbb.com/1/upload?key=${image_hosting}`
