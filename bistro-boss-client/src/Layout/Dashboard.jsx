@@ -25,10 +25,6 @@ const Dashboard = () => {
     dispatch(getMenuLists())
     onAuthStateChanged(auth, user => {
       if (user?.email) {
-        console.log({
-          name: user?.displayName,
-          email: user?.email
-        })
         dispatch(
           saveUserData({
             name: user?.displayName,
