@@ -13,6 +13,7 @@ import Cart from '../Pages/Dashboard/Cart/Cart'
 import AdminRoute from '../Components/PrivateRoute/AdminRoute'
 import ManageItems from '../Pages/Dashboard/ManageItems/ManageItems'
 import AddItems from '../Pages/Dashboard/AddItems/AddItems'
+import EditMenuItem from '../Pages/Dashboard/EditMenuItem/EditMenuItem'
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path:'admin-manage-items',
         element:<AdminRoute><ManageItems/></AdminRoute>
+      },
+      {
+        path:'admin-manage-items/:id',
+        element:<AdminRoute><EditMenuItem/></AdminRoute>
       }
     ]
   }

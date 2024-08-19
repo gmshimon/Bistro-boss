@@ -11,11 +11,17 @@ import PopularMenu from '../../Components/PopularMenu/PopularMenu'
 import { useSelector, useDispatch } from 'react-redux'
 import SectionTItle from '../../Components/SectionTitle/SectionTItle'
 import MenuCategory from '../../Components/MenuCategory/MenuCategory'
+import { setLimit, setPage } from '../../Redux/Slice/menuSlice'
 
 const Menu = () => {
   const { menu, desserts, soups, salads, pizzas, offered } = useSelector(
     state => state.menu
   )
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(setPage(0))
+    dispatch(setLimit(0))
+  }, [dispatch])
   return (
     <div>
       <Helmet>

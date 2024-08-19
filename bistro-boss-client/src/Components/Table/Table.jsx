@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 
-const Table = ({ menus, headers,action1,action2 }) => {
+const Table = ({ menus, headers,action1,action2,button1 }) => {
   return (
     <div>
       <div className='overflow-x-auto pl-10'>
@@ -35,6 +35,7 @@ const Table = ({ menus, headers,action1,action2 }) => {
                 <td>
                   <button
                     disabled={item?.role === 'admin'}
+                    onClick ={()=>button1(item._id)}
                     // onClick={() => handleDeleteItem(item._id)}
                     className='btn btn-warning'
                   >
