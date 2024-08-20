@@ -20,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/bistroDb').then(() => {
 //Router
 const menuRouter = require('./Models/Menu/menu.route')
 const reviewRouter = require('./Models/Reviews/review.route')
-const cartRouter = require('./Models/Cart/cart.route')
+// const cartRouter = require('./Models/Cart/cart.route')
 const userRouter = require('./Models/User/user.route')
 
 app.get('/', (req, res) => {
@@ -31,6 +31,6 @@ app.listen(port, () => {
   console.log('Bistro Boss is listening on port ', port)
   app.use('/api/v1/menu',menuRouter)
   app.use('/api/v1/review',reviewRouter)
-  app.use('/api/v1/cart', cartRouter)
+  // app.use('/api/v1/cart', cartRouter)
   app.use('/api/v1/user', userRouter)
 })
