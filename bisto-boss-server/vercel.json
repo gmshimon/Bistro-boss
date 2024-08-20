@@ -8,8 +8,16 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "/"
+            "src": "/Models/Menu/(.*)",
+            "dest": "./Models/Menu/menu.route.js"
+        },
+        {
+            "src": "./Models/Reviews/(.*)",
+            "dest": "./Models/Reviews/review.route.js"
+        },
+        {
+            "src": "./Models/User/(.*)",
+            "dest": "./Models/User/user.route.js"
         }
     ]
 }
