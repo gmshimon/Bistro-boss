@@ -1,22 +1,24 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteCartItems, getCartItems, resetCart } from '../../../Redux/Slice/CartSlice'
+import { decrementQuantity, incrementQuantity, resetCart } from '../../../Redux/Slice/CartSlice'
 import Swal from 'sweetalert2'
+import SectionTItle from '../../../Components/SectionTitle/SectionTItle'
 
 const Cart = () => {
   const { user } = useSelector(state => state.auth)
   const { cartItems, isCartDeleteSuccess } = useSelector(state => state.cart)
+  const [total,setTotal] = useState(0)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getCartItems(user?.email))
-  }, [dispatch, user?.email])
-
-  const totalPrice = cartItems.reduce((totalPrice, item) => {
-    return totalPrice + item.price
-  }, 0)
-
+    const total = cartItems.reduce((total, item) => {
+      return total + item?.totalPrice
+    }, 0)
+    setTotal(total)
+  }, [dispatch, cartItems])
+  
+  console.log(cartItems)
   const handleDeleteItem = itemId => {
     Swal.fire({
       title: 'Are you sure?',
@@ -28,7 +30,7 @@ const Cart = () => {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.isConfirmed) {
-        dispatch(deleteCartItems(itemId))
+        // dispatch(deleteCartItems(itemId))
         if(isCartDeleteSuccess){
             Swal.fire({
               title: 'Deleted!',
@@ -40,13 +42,22 @@ const Cart = () => {
       }
     })
   }
+
+  const handleIncrementQuantity = (item) => {
+    dispatch(incrementQuantity(item));
+  };
+
+  const handleDecrementQuantity = (item) => {
+    dispatch(decrementQuantity(item));
+  };
   return (
     <div className='p-4'>
+      <SectionTItle heading={"Wanna Add More?"} subHeading={"My Cart"}/>
       <div className='flex justify-evenly'>
         <h1 className='uppercase text-3xl'>
           Total Orders: {cartItems?.length}
         </h1>
-        <h1 className='uppercase text-3xl'>Total Price: ${totalPrice}</h1>
+        <h1 className='uppercase text-3xl'>Total Price: ${total.toFixed(1)}</h1>
         <button className='btn btn-primary'>Pay</button>
       </div>
       <div className='overflow-x-auto'>
@@ -78,15 +89,24 @@ const Cart = () => {
                   </div>
                 </td>
                 <td>{item?.name}</td>
-                <td>{item?.price}</td>
-                <th>
-                  <button
-                    onClick={() => handleDeleteItem(item._id)}
-                    className='btn btn-error'
-                  >
-                    <MdDelete />
-                  </button>
-                </th>
+                <td>{item?.totalPrice.toFixed(1)}</td>
+                <td>
+                  <div className="space-x-2 flex justify-start items-center">
+                    <button
+                      onClick={() => handleDecrementQuantity(item)}
+                      className="btn btn-sm btn-square btn-outline"
+                    >
+                      -
+                    </button>
+                    <span>{item?.quantity}</span>
+                    <button
+                      onClick={() => handleIncrementQuantity(item)}
+                      className="btn btn-sm btn-square btn-outline"
+                    >
+                      +
+                    </button>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

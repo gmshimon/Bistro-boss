@@ -3,7 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { addToCart, resetCart } from '../../Redux/Slice/CartSlice'
+import { addCartItems, resetCart } from '../../Redux/Slice/CartSlice'
 
 const FoodCard = ({ item }) => {
   const { name, image, price, recipe, _id } = item
@@ -22,7 +22,7 @@ const FoodCard = ({ item }) => {
         image,
         price
       }
-      dispatch(addToCart(cartItem))
+      dispatch(addCartItems(cartItem))
       if (isCartCreateSuccess) {
         Swal.fire({
           position: 'top-end',

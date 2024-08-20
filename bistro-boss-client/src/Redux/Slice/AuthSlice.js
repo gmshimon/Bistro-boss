@@ -212,6 +212,7 @@ const AuthSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload
+        state.isLoading = false
         state.isGetUserDataLoading = false
         state.isGetUserDataSuccess = true
         state.isGetUserDataError = false

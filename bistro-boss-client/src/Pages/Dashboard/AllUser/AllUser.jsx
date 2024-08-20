@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import SectionTItle from '../../../Components/SectionTitle/SectionTItle'
 import { MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCartItems } from '../../../Redux/Slice/CartSlice'
 import { getAllUsers } from '../../../Redux/Slice/AuthSlice'
 import { FaUsers } from 'react-icons/fa'
 
