@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 
-const Table = ({ menus, headers,action1,action2,button1 }) => {
+const Table = ({ menus, headers,action1,action2,button1,button2 }) => {
   return (
     <div>
       <div className='overflow-x-auto pl-10'>
@@ -44,7 +44,7 @@ const Table = ({ menus, headers,action1,action2,button1 }) => {
                 </td>
                 <th>
                   <button
-                    // onClick={() => handleDeleteItem(item._id)}
+                    onClick={() => button2(item._id)}
                     className='btn btn-error'
                   >
                     {action2}

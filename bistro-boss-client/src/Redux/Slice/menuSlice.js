@@ -24,6 +24,9 @@ const initialState = {
     isUpdateMenuLoading:false,
     isUpdateMenuError:false,
     isUpdateMenuSuccess:false,
+    isDeleteMenuLoading:false,
+    isDeleteMenuError:false,
+    isDeleteMenuSuccess:false,
 }
 
 export const getMenuLists = createAsyncThunk ("getMenuLists",async ({page,ItemLimit})=>{
@@ -46,13 +49,22 @@ export const getSingleMenuItem = createAsyncThunk("getSingleMenuItem",async(id)=
 })
 export const updateMenuItem = createAsyncThunk('updateMenuItem',async({id,data})=>{
     const token = localStorage.getItem('access_token');
-    console.log(token);
     const response = await axios.put(`/menu/edit-menu/${id}`,data,{
         headers: {
             'authorization': 'Bearer '+ token,
         }
     })
     return response.data;
+})
+
+export const deleteMenuItem = createAsyncThunk('deleteMenuItem',async(id)=>{
+    const token = localStorage.getItem('access_token');
+    const response = await axios.delete(`/menu/delete-menu/${id}`,{
+        headers:{
+            'authorization': 'Bearer '+ token,
+        }
+    })
+    return id;
 })
 const menuSlice = createSlice({
     name: 'menu',
@@ -67,7 +79,10 @@ const menuSlice = createSlice({
             state.isCreateMenuSuccess=false,
             state.isUpdateMenuLoading=false,
             state.isUpdateMenuError=false,
-            state.isUpdateMenuSuccess=false
+            state.isUpdateMenuSuccess=false,
+            state.isDeleteMenuLoading=false,
+            state.isDeleteMenuError=false,
+            state.isDeleteMenuSuccess=false
         },
         setPage:(state,action)=>{
             state.page = action.payload;
@@ -135,7 +150,18 @@ const menuSlice = createSlice({
             state.isUpdateMenuLoading = false;
             state.isUpdateMenuSuccess = false;
         })
-
+        .addCase(deleteMenuItem.pending,(state,action)=>{
+            state.isDeleteMenuLoading = true;
+            state.isDeleteMenuSuccess = false;
+            state.isDeleteMenuError = false;
+        })
+        .addCase(deleteMenuItem.fulfilled,(state,action)=>{
+            state.isDeleteMenuSuccess = true;
+            state.isDeleteMenuLoading = false;
+            state.isDeleteMenuError = false;
+            const result = state.menus.filter(menu=>menu._id !==action.payload)
+            state.menus = result;
+        })
     }
 })
 

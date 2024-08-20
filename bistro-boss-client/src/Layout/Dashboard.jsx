@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import {
   FaBook,
@@ -12,10 +12,6 @@ import {
 } from 'react-icons/fa'
 import { MdOutlineMenu, MdOutlineRateReview } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMenuLists } from '../Redux/Slice/menuSlice'
-import { onAuthStateChanged } from 'firebase/auth'
-import { saveUserData, setUser, startLoading } from '../Redux/Slice/AuthSlice'
-import auth from '../firebase/firebase.config'
 import CurrentUser from '../utilis/CurrentUser'
 
 const Dashboard = () => {

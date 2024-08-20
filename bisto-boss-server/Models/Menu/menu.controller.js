@@ -107,3 +107,28 @@ module.exports.updateMenuItem = async(req, res, next) => {
     })
   }
 }
+
+module.exports.deleteMenuItem = async (req, res, next) => {
+  try {
+    const {id} =req.params
+    const result = await Menu.findOne({ _id: id})
+    if(!result) {
+      return res.status(404).json({
+        status: 'Fail',
+        message: 'Menu not found',
+      })
+    }
+    const deleteItem = await Menu.deleteOne({ _id: id })
+
+    res.status(200).json({
+      status: 'Success',
+      message: 'Menu deleted successfully',
+    })
+
+  } catch (error) {
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to delete menu',
+    })
+  }
+}

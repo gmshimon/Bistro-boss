@@ -6,7 +6,7 @@ var bodyParser = require('body-parser')
 const { query } = require('express')
 require('dotenv').config()
 // mongodb://localhost:27017
-const port = 5000 || PROCESS.ENV.PORT
+const port = process.env.PORT || 5000
 // Middleware
 const app = express()
 app.use(cors())

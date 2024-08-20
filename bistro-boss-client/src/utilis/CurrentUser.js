@@ -4,7 +4,7 @@ import { getMenuLists } from "../Redux/Slice/menuSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import auth from "../firebase/firebase.config";
-import { saveUserData, startLoading } from "../Redux/Slice/AuthSlice";
+import { fetchUser, startLoading } from "../Redux/Slice/AuthSlice";
 
 const CurrentUser = () => {
     const { user } = useSelector(state => state.auth);
@@ -14,16 +14,16 @@ const CurrentUser = () => {
         dispatch(getMenuLists({page,ItemLimit}))
         onAuthStateChanged(auth, currentUser => {
           if (currentUser?.email) {
-            dispatch(
-              saveUserData({
-                name: currentUser?.displayName,
-                email: currentUser?.email
-              })
-            )
-            localStorage.setItem("access_token", user?.token)
+            dispatch(fetchUser(currentUser.email))
+            // dispatch(
+            //   saveUserData({
+            //     name: currentUser?.displayName,
+            //     email: currentUser?.email
+            //   })
+            // )
             // dispatch(setUser(user))
           } else {
-            localStorage.removeItem("access_token")
+            localStorage.removeItem("userToken")
             dispatch(startLoading(false))
             // dispatch(toggleLoading())
           }

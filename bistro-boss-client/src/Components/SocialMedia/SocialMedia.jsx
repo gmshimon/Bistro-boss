@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { FaGoogle } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import { loginWithGoogle, reset, saveUserData } from '../../Redux/Slice/AuthSlice';
+import { loginWithGoogle, reset } from '../../Redux/Slice/AuthSlice';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,6 @@ const SocialMedia = ({from}) => {
                 name:user?.displayName,
                 email:user?.email
             }
-            dispatch(saveUserData(userInfo));
             dispatch(reset())
             Swal.fire({
               position: 'top-end',

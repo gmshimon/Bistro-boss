@@ -4,7 +4,6 @@ const { promisify } = require('util')
 module.exports = async (req, res, next) => {
   try {
     const token = req.headers?.authorization?.split(' ')[1]
-    console.log(token);
     if (!token) {
       return res.status(401).json({
         status: 'fail',
@@ -13,10 +12,9 @@ module.exports = async (req, res, next) => {
     }
 
     const decoded = await promisify(jwt.verify)(token, process.env.TOKEN_SECRET)
-    console.log('decoded: ', decoded)
     if (decoded.role !== 'admin') {
       return res.status(401).json({
-        status: 'fail',
+        status: 'fail', 
         message: 'You are not Admin'
       })
     }

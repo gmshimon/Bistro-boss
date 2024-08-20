@@ -45,11 +45,35 @@ module.exports.getAllUsers = async(req,res,next)=>{
             data: users
         })
     }catch(error){
-        console.log(error)
         res.status(400).json({
             status: 'Fail',
             message: 'Failed to fetch users',
             error: error.message
         })
     }
+}
+
+module.exports.fetchUser = async(req, res, next) => {
+  try {
+    const data = req.body
+    const user = await Users.findOne({ email: data.email })
+    if(!user){
+      return res.status(404).json({
+        status: 'Fail',
+        message: 'User not found',
+      })
+    }
+
+    res.status(200).json({
+      status: 'Success',
+      message: 'User fetched successfully',
+      data: user
+    })
+  } catch (error) {
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to fetch users',
+      error: error.message
+  })
+  }
 }

@@ -1,22 +1,24 @@
 import { useParams } from "react-router-dom";
 import EditMenu from "../../../Components/EditMenu/EditMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { reset } from "../../../Redux/Slice/menuSlice";
 
 const EditMenuItem = () => {
     const {isUpdateMenuSuccess,isUpdateMenuLoading} = useSelector(state=>state.menu)
     const params = useParams()
-
+    const dispatch = useDispatch()
     useEffect(()=>{
         if(isUpdateMenuSuccess) {
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
-                title: 'Menu I',
+                title: 'Menu item updated successfully',
                 showConfirmButton: false,
                 timer: 2000
               })
+              dispatch(reset())
         }
         if(isUpdateMenuLoading) {
             Swal.fire({
@@ -26,8 +28,9 @@ const EditMenuItem = () => {
                 showConfirmButton: false,
                 timer: 2000
               })
+              dispatch(reset())
         }
-    },[isUpdateMenuLoading, isUpdateMenuSuccess])
+    },[dispatch, isUpdateMenuLoading, isUpdateMenuSuccess])
 
     return (
         <div>
