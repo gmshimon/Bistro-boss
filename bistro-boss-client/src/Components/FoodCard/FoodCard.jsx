@@ -17,7 +17,6 @@ const FoodCard = ({ item }) => {
     if (user && user?.email) {
       const cartItem = {
         menuID: _id,
-        user: user?.email,
         name,
         image,
         price

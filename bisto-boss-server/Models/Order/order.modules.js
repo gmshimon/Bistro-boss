@@ -11,18 +11,54 @@ const orderSchema = mongoose.Schema({
     email:{
         type: String,
         required: true,
-        unique: true,
         lowercase: true,
         validate: [validate.isEmail, 'Please enter a valid email']
     },
-    role:{
+    transaction_id:{
         type: String,
-        enum: ['admin', 'user'],
-        default: 'user'
-    }
+        required: true
+    },
+    total_price:{
+        type: String,
+        required: true
+    },
+    status:{
+        type:String,
+        enum :['pending', 'accepted', 'rejected'],
+        default: 'pending'
+    },
+    carts:[
+        {
+            menuID:{
+                type: ObjectId,
+                ref: 'Menu',
+                required: true
+            },
+            name:{
+                type: String,
+                required: true
+            },
+            price:{
+                type: String,
+                required: true
+            },
+            totalPrice:{
+                type: String,
+                required: true
+            },
+            quantity:{
+                type: Number,
+                required: true
+            },
+            image:{
+                type: String,
+                required: true
+            }
+        }
+    ]
 },{
     timestamps: true
 })
 
-// const Users = mongoose.model('Users',userSchema)
-// module.exports = Users
+const Orders = mongoose.model('Orders',orderSchema)
+module.exports = Orders

@@ -33,6 +33,9 @@ const cartSlice = createSlice({
       state.isCartDeleteSuccess = false
       state.isCartDeleteError = false
     },
+    setCartNull:state=>{
+      state.cartItems = []
+    },
     addCartItems: (state, action) => {
       const existingItem = state.cartItems.find(
         item => item.menuID === action.payload.menuID
@@ -87,6 +90,7 @@ export const {
   reset: resetCart,
   addCartItems,
   incrementQuantity,
-  decrementQuantity
+  decrementQuantity,
+  setCartNull
 } = cartSlice.actions
 export default cartSlice.reducer

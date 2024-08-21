@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { decrementQuantity, incrementQuantity, resetCart } from '../../../Redux/Slice/CartSlice'
 import Swal from 'sweetalert2'
 import SectionTItle from '../../../Components/SectionTitle/SectionTItle'
+import { Link } from 'react-router-dom'
+
 
 const Cart = () => {
   const { user } = useSelector(state => state.auth)
@@ -18,7 +19,6 @@ const Cart = () => {
     setTotal(total)
   }, [dispatch, cartItems])
   
-  console.log(cartItems)
   const handleDeleteItem = itemId => {
     Swal.fire({
       title: 'Are you sure?',
@@ -51,14 +51,19 @@ const Cart = () => {
     dispatch(decrementQuantity(item));
   };
   return (
-    <div className='p-4'>
+    <section>
       <SectionTItle heading={"Wanna Add More?"} subHeading={"My Cart"}/>
-      <div className='flex justify-evenly'>
+      <div className='p-4 ml-10 bg-slate-100 rounded-md'>
+      <div className='flex justify-evenly mt-2'>
         <h1 className='uppercase text-3xl'>
           Total Orders: {cartItems?.length}
         </h1>
-        <h1 className='uppercase text-3xl'>Total Price: ${total.toFixed(1)}</h1>
-        <button className='btn btn-primary'>Pay</button>
+        <h1 className='uppercase text-2xl'>Total Price: ${total.toFixed(1)}</h1>
+        {
+          cartItems?.length ? <Link to={"/dashboard/payment"}>
+          <button className='btn btn-primary'>Pay</button>
+          </Link> : <button disabled className='btn btn-primary'>Pay</button>
+        }
       </div>
       <div className='overflow-x-auto'>
         <table className='table'>
@@ -113,6 +118,7 @@ const Cart = () => {
         </table>
       </div>
     </div>
+    </section>
   )
 }
 
