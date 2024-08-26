@@ -15,6 +15,8 @@ import ManageItems from '../Pages/Dashboard/ManageItems/ManageItems'
 import AddItems from '../Pages/Dashboard/AddItems/AddItems'
 import EditMenuItem from '../Pages/Dashboard/EditMenuItem/EditMenuItem'
 import Payment from '../Pages/Dashboard/Payment/Payment'
+import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory'
+import AddReview from '../Pages/Dashboard/AddReview/AddReview'
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
       {
         path:'payment',
         element:<PrivateRoute><Payment/></PrivateRoute>	
+      },
+      {
+        path:'payment-history',
+        element:<PrivateRoute><PaymentHistory/></PrivateRoute>	
+      },
+      {
+        path:'add-review',
+        element:<PrivateRoute><AddReview/></PrivateRoute>	
       },
       {
         path:'all-user',

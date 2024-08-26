@@ -10,7 +10,7 @@ import {
   FaUsers,
   FaUtensils
 } from 'react-icons/fa'
-import { MdOutlineMenu, MdOutlineRateReview } from 'react-icons/md'
+import { MdOutlineMenu, MdOutlinePayment, MdOutlineRateReview } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import CurrentUser from '../utilis/CurrentUser'
 
@@ -77,7 +77,13 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to='/dashboard/my-review'>
+                <NavLink to='/dashboard/payment-history'>
+                  <MdOutlinePayment />
+                  Payment History
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to='/dashboard/add-review'>
                   <MdOutlineRateReview />
                   Add Review
                 </NavLink>
