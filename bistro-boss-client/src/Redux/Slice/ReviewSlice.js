@@ -1,16 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import axiosSecure from '../../utilis/axiosSecure'
 
 const initialState = {
   reviews: [],
   isGetReviewLoading: false,
   isGetReviewError: false,
-  isGetReviewSuccess: false
+  isGetReviewSuccess: false,
+  isCreateReviewLoading: false,
+  isCreateReviewError: false,
+  isCreateReviewSuccess: false
 }
 
 export const getReview = createAsyncThunk('getReview', async () => {
   const response = await axios.get('http://localhost:5000/api/v1/review')
+  return response.data.data
+})
+
+export const createReview = createAsyncThunk('createReview', async (reviewData) => {
+  const response = await axiosSecure.post('/review/create-review', reviewData)
   return response.data.data
 })
 
@@ -22,7 +31,10 @@ const reviewSlice = createSlice({
       (state.reviews = []),
         (state.isGetReviewLoading = false),
         (state.isGetReviewError = false),
-        (state.isGetReviewSuccess = false)
+        (state.isGetReviewSuccess = false),
+        state.isCreateReviewLoading=false,
+        state.isCreateReviewError=false,
+        state.isCreateReviewSuccess= false
     }
   },
   extraReducers: builder => {
@@ -42,6 +54,21 @@ const reviewSlice = createSlice({
         state.isGetReviewLoading = false
         state.isGetReviewSuccess = false
         state.isGetReviewError = true
+      })
+      .addCase(createReview.pending, (state, action) => {
+        state.isCreateReviewLoading = true
+        state.isCreateReviewSuccess = false
+        state.isCreateReviewError = false
+      })
+      .addCase(createReview.fulfilled, (state, action) => {
+        state.isCreateReviewSuccess = true
+        state.isCreateReviewLoading = false
+        state.reviews.push(action.payload)
+      })
+      .addCase(createReview.rejected, (state, action) => {
+        state.isCreateReviewLoading = false
+        state.isCreateReviewSuccess = false
+        state.isCreateReviewError = true
       })
   }
 })

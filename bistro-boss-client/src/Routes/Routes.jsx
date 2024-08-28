@@ -17,6 +17,7 @@ import EditMenuItem from '../Pages/Dashboard/EditMenuItem/EditMenuItem'
 import Payment from '../Pages/Dashboard/Payment/Payment'
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory'
 import AddReview from '../Pages/Dashboard/AddReview/AddReview'
+import UserHome from '../Pages/Dashboard/UserHome/UserHome'
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
     path:'dashboard/',
     element:<Dashboard/>,
     children:[
+      {
+        path:'user-home',
+        element:<PrivateRoute><UserHome/></PrivateRoute>
+      },
       {
         path:'cart',
         element:<PrivateRoute><Cart/></PrivateRoute>

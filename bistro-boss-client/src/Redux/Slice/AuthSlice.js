@@ -10,8 +10,10 @@ import {
 } from 'firebase/auth'
 import auth from '../../firebase/firebase.config'
 import axios from '../../utilis/axios'
+import axiosSecure from '../../utilis/axiosSecure'
 
 const initialState = {
+  userDetails:null,
   user: null,
   users: [],
   isLoading: true,
@@ -90,6 +92,11 @@ export const loginWithGoogle = createAsyncThunk('loginWithGoogle', async () => {
 
 export const getAllUsers = createAsyncThunk('getAllUsers', async () => {
   const response = await axios.get('/user')
+  return response.data.data
+})
+
+export const getUserDetails = createAsyncThunk('getUserDetails', async () => {
+  const response = await axiosSecure.get('/user/get-details')
   return response.data.data
 })
 
@@ -221,6 +228,9 @@ const AuthSlice = createSlice({
         state.isGetUserDataLoading = false
         state.isGetUserDataSuccess = false
         state.isGetUserDataError = true
+      })
+      .addCase(getUserDetails.fulfilled,(state, action) => {
+        state.userDetails = action.payload
       })
   }
 })
