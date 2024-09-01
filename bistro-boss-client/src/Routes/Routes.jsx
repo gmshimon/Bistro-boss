@@ -18,6 +18,7 @@ import Payment from '../Pages/Dashboard/Payment/Payment'
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory'
 import AddReview from '../Pages/Dashboard/AddReview/AddReview'
 import UserHome from '../Pages/Dashboard/UserHome/UserHome'
+import Reservation from '../Pages/Dashboard/Reservation/Reservation'
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path:'user-home',
         element:<PrivateRoute><UserHome/></PrivateRoute>
+      },
+      {
+        path:'reservation',
+        element:<PrivateRoute><Reservation/></PrivateRoute>
       },
       {
         path:'cart',

@@ -32,12 +32,16 @@ const reviewRouter = require('./Models/Reviews/review.route')
 const userRouter = require('./Models/User/user.route')
 const paymentRouter = require('./Models/Payment/payment.routes')
 const orderRouter = require('./Models/Order/order.routes')
+const bookingRouter = require('./Models/Booking/booking.routes')
+const tableRouter = require('./Models/Table/table.routes')
 
 app.use('/api/v1/menu', menuRouter)
 app.use('/api/v1/review', reviewRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/payment',paymentRouter)
 app.use('/api/v1/order',orderRouter)
+app.use('/api/v1/booking',bookingRouter)
+app.use('/api/v1/table',tableRouter)
 
 
 app.get('/', (req, res) => {

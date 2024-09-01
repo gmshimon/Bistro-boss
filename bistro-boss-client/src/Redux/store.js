@@ -6,6 +6,7 @@ import reviewSlice from './Slice/ReviewSlice';
 import authSlice from './Slice/AuthSlice';
 import cartSlice from './Slice/CartSlice';
 import OrderSlice from './Slice/OrderSlice'
+import bookingSlice from './Slice/bookingSlice'
 
 // Persist configuration for cart slice
 const cartPersistConfig = {
@@ -21,6 +22,7 @@ const store = configureStore({
         review: reviewSlice,
         auth: authSlice,
         order:OrderSlice,
+        booking: bookingSlice,
         cart: persistedCartReducer, // Use the persisted cart reducer
     },
 });
