@@ -9,6 +9,9 @@ const initialState = {
     isGetBookingLoading: false,
     isGetBookingError: false,
     isGetBookingSuccess: false,
+    isGetMyBookingLoading: false,
+    isGetMyBookingError: false,
+    isGetMyBookingSuccess: false,
     isCreateBookingLoading: false,
     isCreateBookingSuccess: false,
     isCreateBookingError: false,
@@ -34,6 +37,16 @@ export const createBooking = createAsyncThunk('createBooking',async(data,{reject
     }
 })
 
+export const getMyBooking = createAsyncThunk('getMyBooking',async()=>{
+    const response  = await axiosSecure.get('/booking/my-booking')
+    return response.data.data
+})
+
+export const cancelMyBooking = createAsyncThunk('cancelMyBooking',async(id)=>{  
+    const response = await axiosSecure.delete(`/booking/cancel-my-booking/${id}`)
+    return id
+})
+
 const bookingSlice = createSlice({
     name: 'booking',
     initialState,
@@ -52,6 +65,9 @@ const bookingSlice = createSlice({
             state.isDeleteBookingLoading = false
             state.isDeleteBookingSuccess = false
             state.isDeleteBookingError = false
+            state.isGetMyBookingLoading=false
+            state.isGetMyBookingError=false
+            state.isGetMyBookingSuccess=false
         },
     },
     extraReducers: builder => {
@@ -89,6 +105,40 @@ const bookingSlice = createSlice({
                 state.isCreateBookingError = true
                 state.isCreateBookingSuccess = false
                 state.errorMessage = action.payload
+            })
+            .addCase(getMyBooking.pending, (state) => {
+                state.isGetMyBookingLoading = true
+                state.isGetMyBookingError = false
+                state.isGetMyBookingSuccess = false
+            })
+            .addCase(getMyBooking.fulfilled, (state, action) => {
+                state.isGetMyBookingLoading = false
+                state.isGetMyBookingError = false
+                state.isGetMyBookingSuccess = true
+                state.bookings = action.payload
+            })
+            .addCase(getMyBooking.rejected, (state, action) => {
+                state.isGetMyBookingLoading = false
+                state.isGetMyBookingError = true
+                state.isGetMyBookingSuccess = false
+                console.log(action.error)
+            })
+            .addCase(cancelMyBooking.pending, (state) => {
+                state.isDeleteBookingLoading = true
+                state.isDeleteBookingError = false
+                state.isDeleteBookingSuccess = false
+            })
+            .addCase(cancelMyBooking.fulfilled, (state,action) => {
+                state.isDeleteBookingLoading = false
+                state.isDeleteBookingSuccess = true
+                state.isDeleteBookingError = false
+                const result = state.bookings.filter (item=>item._id !== action.payload)
+                state.bookings = result
+            })
+            .addCase(cancelMyBooking.rejected, (state) => {
+                state.isDeleteBookingLoading = false
+                state.isDeleteBookingSuccess = false
+                state.isDeleteBookingError = true
             })
     }
 })

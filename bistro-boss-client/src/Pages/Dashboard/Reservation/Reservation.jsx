@@ -7,13 +7,13 @@ import Swal from 'sweetalert2'
 import { bookingReset, createBooking } from '../../../Redux/Slice/bookingSlice'
 
 const Reservation = () => {
+  const {user} = useSelector(state=>state.auth)
   const {booking,errorMessage,isCreateBookingSuccess,isCreateBookingError} = useSelector(state=>state.booking)
     const [date,setDate] = useState('')
     const [time, setTime] = useState('')
     const [people, setPeople] = useState('')
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
 
     const dispatch = useDispatch()
 
@@ -47,7 +47,7 @@ const Reservation = () => {
             people,
             name,
             phone,
-            email
+            email:user?.email
         }
         dispatch(createBooking(data))
         setDate('')
@@ -55,7 +55,6 @@ const Reservation = () => {
         setPeople('')
         setName('')
         setPhone('')
-        setEmail('')
     }
   return (
     <section>
@@ -143,8 +142,9 @@ const Reservation = () => {
                 Email *
               </label>
               <input
-              value={email}
-              onChange={e=>setEmail(e.target.value)}
+              value={user?.email}
+              readOnly
+              // onChange={e=>setEmail(e.target.value)}
                 required
                 name='email'
                 type='email'

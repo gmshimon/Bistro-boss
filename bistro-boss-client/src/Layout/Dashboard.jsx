@@ -6,6 +6,7 @@ import {
   FaCalendar,
   FaHome,
   FaList,
+  FaRegCalendarCheck,
   FaShoppingCart,
   FaUsers,
   FaUtensils
