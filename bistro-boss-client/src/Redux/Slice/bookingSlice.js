@@ -23,11 +23,6 @@ const initialState = {
     isDeleteBookingError: false,
 }
 
-export const getBooking = createAsyncThunk('getBooking',async()=>{
-    const response  = await axiosSecure.get('/booking/get-my-booking')
-    return response.data.data
-})
-
 export const createBooking = createAsyncThunk('createBooking',async(data,{rejectWithValue})=>{
     try {
         const response = await axiosSecure.post('booking/make-booking',data)
@@ -39,6 +34,11 @@ export const createBooking = createAsyncThunk('createBooking',async(data,{reject
 
 export const getMyBooking = createAsyncThunk('getMyBooking',async()=>{
     const response  = await axiosSecure.get('/booking/my-booking')
+    return response.data.data
+})
+
+export const getAllBooking = createAsyncThunk('getAllBooking',async()=>{
+    const response  = await axiosSecure.get('/booking/all-bookings')
     return response.data.data
 })
 
@@ -72,18 +72,18 @@ const bookingSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-           .addCase(getBooking.pending, (state) => {
+           .addCase(getAllBooking.pending, (state) => {
                 state.isGetBookingLoading = true
                 state.isGetBookingError = false
                 state.isGetBookingSuccess = false
             })
-           .addCase(getBooking.fulfilled, (state, action) => {
+           .addCase(getAllBooking.fulfilled, (state, action) => {
                 state.isGetBookingLoading = false
                 state.isGetBookingError = false
                 state.isGetBookingSuccess = true
                 state.bookings = action.payload
             })
-           .addCase(getBooking.rejected, (state, action) => {
+           .addCase(getAllBooking.rejected, (state, action) => {
                 state.isGetBookingLoading = false
                 state.isGetBookingError = true
                 state.isGetBookingSuccess = false

@@ -94,3 +94,21 @@ module.exports.cancelMyBooking = async (req, res, next) => {
     })
   }
 }
+
+
+module.exports.getAllBookings = async(req,res,next)=>{
+  try{
+    const result = await Booking.find({})
+    res.status(200).json({
+      status: 'Success',
+      message: 'All bookings fetched successfully',
+      data: result
+    })
+  }catch(error){
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to fetch bookings',
+      error: error.message
+    })
+  }
+}
