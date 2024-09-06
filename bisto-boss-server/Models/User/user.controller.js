@@ -1,4 +1,5 @@
 const { generateToken } = require('../../Utilis/token')
+const Menu = require('../Menu/menu.modules')
 const Orders = require('../Order/order.modules')
 const Review = require('../Reviews/review.modules')
 const Users = require('./user.modules')
@@ -103,6 +104,79 @@ module.exports.getUserDetails = async (req, res, next) => {
       status: 'Fail',
       message: 'Failed to fetch users',
       error: error.message
+    })
+  }
+}
+
+module.exports.adminDetails = async(req,res,next)=>{
+  try {
+    const users = await Users.find({})
+    const totalOrders = await Orders.find({})
+    const totalProduct =  await Menu.find({})
+    const products = await Menu.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$count" },
+          categories: { $push: { category: "$_id", count: "$count" } }
+        }
+      },
+      {
+        $unwind: "$categories"
+      },
+      {
+        $project: {
+          _id: 0,
+          category: "$categories.category",
+          count: "$categories.count",
+          percentage: {
+            $multiply: [
+              { $divide: ["$categories.count", "$total"] },
+              100
+            ]
+          }
+        }
+      }
+    ]);
+
+    const orders = await Orders.aggregate([
+      {
+        $unwind: "$carts"  // Unwind the carts array
+      },
+      {
+        $group: {
+          _id: "$carts.category",  // Group by the category in the carts array
+          totalSold: { $sum: "$carts.quantity" }  // Sum the quantity for each category
+        }
+      }
+    ]);
+
+
+    const data = {
+      customers:users.length,
+      totalOrders: orders.length,
+      totalProducts: totalProduct.length,
+      products:products,
+      orders:orders,
+      revenue:1000,
+
+    }
+    res.status(200).json({
+      status: 'Success',
+      message: 'Admin details fetched successfully',
+      data: data
+    })
+  } catch (error) {
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Admin details failed to fetch',
+      data: error.message
     })
   }
 }

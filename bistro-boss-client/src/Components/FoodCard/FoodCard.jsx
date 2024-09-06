@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { addCartItems, resetCart } from '../../Redux/Slice/CartSlice'
 
 const FoodCard = ({ item }) => {
-  const { name, image, price, recipe, _id } = item
+  const { name, image, price, recipe, _id, category } = item
   const { user } = useSelector(state => state.auth)
   const { isCartCreateSuccess } = useSelector(state => state.cart)
 
@@ -19,8 +19,10 @@ const FoodCard = ({ item }) => {
         menuID: _id,
         name,
         image,
-        price
+        price,
+        category
       }
+      console.log(cartItem)
       dispatch(addCartItems(cartItem))
       if (isCartCreateSuccess) {
         Swal.fire({
