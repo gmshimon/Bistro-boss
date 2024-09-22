@@ -6,32 +6,7 @@
         "use": "@vercel/node"
       }
     ],
-    "routes": [
-      {
-        "src": "/api/v1/menu/(.*)",
-        "dest": "/Models/Menu/menu.route.js"
-      },
-      {
-        "src": "/api/v1/review/(.*)",
-        "dest": "/Models/Reviews/review.route.js"
-      },
-      {
-        "src": "/api/v1/user/(.*)",
-        "dest": "/Models/User/user.route.js"
-      },
-      {
-        "src": "/api/v1/order/(.*)",
-        "dest": "/Models/Order/order.routes.js"
-      },
-      {
-        "src": "/api/v1/payment/(.*)",
-        "dest": "/Models/Payment/payment.routes.js"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/index.js"
-      }
-    ],
+    "rewrites": [{ "source": "/api/v1/(.*)", "destination": "/api/v1/" }],
     "env": {
       "MONGO_URI": "mongodb://localhost:27017/bistroDb",
       "PORT": "5000"
