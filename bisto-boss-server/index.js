@@ -17,9 +17,9 @@ app.use(express.json())
 //bistro_db
 //Kola9696
 
-const uri = "mongodb+srv://bistro_db:Kola9696@cluster0.in8lp.mongodb.net/bistroDb?retryWrites=true&w=majority&appName=Cluster0";
+// const uri = "mongodb+srv://bistro_db:Kola9696@cluster0.in8lp.mongodb.net/bistroDb?retryWrites=true&w=majority&appName=Cluster0";
 
-// const uri = 'mongodb://localhost:27017/bistroDb'
+const uri = 'mongodb://localhost:27017/bistroDb'
 
 //database connection
 mongoose.connect(uri).then(() => {

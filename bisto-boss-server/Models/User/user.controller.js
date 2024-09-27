@@ -157,14 +157,24 @@ module.exports.adminDetails = async(req,res,next)=>{
       }
     ]);
 
-
+    const totalSale = await Orders.aggregate([
+      {
+        $unwind: "$carts"  // Unwind the carts array
+      },
+      {
+        $group: {
+          _id: null,  // Group by the order ID
+          totalOrderPrice: { $sum: { $toDouble: "$carts.totalPrice" } }  // Sum the totalPrice for each order
+        }
+      }
+    ]);
     const data = {
       customers:users.length,
       totalOrders: orders.length,
       totalProducts: totalProduct.length,
+      revenue:totalSale[0].totalOrderPrice,
       products:products,
       orders:orders,
-      revenue:1000,
 
     }
     res.status(200).json({

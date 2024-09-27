@@ -21,6 +21,7 @@ import UserHome from '../Pages/Dashboard/UserHome/UserHome'
 import Reservation from '../Pages/Dashboard/Reservation/Reservation'
 import MyBooking from '../Pages/Dashboard/MyBooking/MyBooking'
 import AdminManageBooking from '../Pages/Dashboard/AdminManageBooking/AdminManageBooking'
+import AdminHome from '../Pages/Dashboard/AdminHome/AdminHome'
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,11 @@ export const router = createBrowserRouter([
       {
         path:'all-user',
         element:<AdminRoute><AllUser/></AdminRoute>
+      },
+      {
+        path:'admin-home',
+        element:<AdminRoute><AdminHome/></AdminRoute>
+        // element:<AddItems/>
       },
       {
         path:'admin-add-items',

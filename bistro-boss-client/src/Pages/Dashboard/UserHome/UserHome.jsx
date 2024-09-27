@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react'
 import Boxes from '../../../Components/Boxes/Boxes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,7 +7,7 @@ import { MdOutlineCalculate, MdOutlineStarPurple500 } from 'react-icons/md'
 import { getUserDetails } from '../../../Redux/Slice/AuthSlice'
 
 const UserHome = () => {
-  const { userDetails } = useSelector(state => state.auth)
+  const { userDetails,user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(getUserDetails())
@@ -16,7 +17,7 @@ const UserHome = () => {
     <section className='mx-5'>
       <h1 className='uppercase text-3xl mt-5'>Hi, Welcome Back!</h1>
       <div>
-        <Boxes />
+        <Boxes user={user} />
       </div>
       <div className='lg:flex'>
         <div className='bg-orange-300 flex justify-center items-center lg:w-1/2 p-5 rounded-lg lg:mr-10 mb-10 lg:mb-0'>

@@ -14,6 +14,7 @@ import axiosSecure from '../../utilis/axiosSecure'
 
 const initialState = {
   userDetails:null,
+  adminDetails:null,
   user: null,
   users: [],
   isLoading: true,
@@ -97,6 +98,11 @@ export const getAllUsers = createAsyncThunk('getAllUsers', async () => {
 
 export const getUserDetails = createAsyncThunk('getUserDetails', async () => {
   const response = await axiosSecure.get('/user/get-details')
+  return response.data.data
+})
+
+export const getAdminDetails = createAsyncThunk('getAdminDetails', async () => {
+  const response = await axiosSecure.get('/user/admin-details')
   return response.data.data
 })
 
@@ -231,6 +237,9 @@ const AuthSlice = createSlice({
       })
       .addCase(getUserDetails.fulfilled,(state, action) => {
         state.userDetails = action.payload
+      })
+      .addCase(getAdminDetails.fulfilled, (state, action) => {
+        state.adminDetails = action.payload
       })
   }
 })
