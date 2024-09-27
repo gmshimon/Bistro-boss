@@ -53,7 +53,6 @@ const Cart = () => {
   const handleDecrementQuantity = item => {
     dispatch(decrementQuantity(item))
   }
-  console.log(cartItems)
   return (
     <section className=''>
       <SectionTItle heading={'Wanna Add More?'} subHeading={'My Cart'} />

@@ -13,6 +13,30 @@ const Navbar = () => {
   // useEffect(()=>{
   //   dispatch(getCartItems(user?.email))
   // },[dispatch, user?.email])
+
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const checkTokenExpiration = () => {
+      const storedToken = localStorage.getItem('userToken');
+      if (storedToken) {
+        const { expiration } = JSON.parse(storedToken);
+        const currentTime = new Date().getTime();
+        if (currentTime > expiration) {
+          // Token has expired, log out the user
+          localStorage.removeItem('userToken');
+          // Redirect to the login page or show a logged-out state
+          dispatch(logOut());
+        }
+      }
+    };
+  
+    useEffect(() => {
+      // Call checkTokenExpiration every sec (1 * 1000 milliseconds)
+      const tokenExpirationInterval = setInterval(checkTokenExpiration, 1 * 1000);
+      // Clean up the interval on component unmount
+      return () => clearInterval(tokenExpirationInterval);
+    }, []);
+
   const navOptions = (
     <>
       <li>

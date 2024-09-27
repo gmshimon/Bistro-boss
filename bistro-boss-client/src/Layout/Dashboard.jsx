@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import {
   FaBook,
@@ -14,12 +14,39 @@ import {
 import { MdOutlineMenu, MdOutlinePayment, MdOutlineRateReview } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import CurrentUser from '../utilis/CurrentUser'
+import { logOut } from '../Redux/Slice/AuthSlice'
 
 const Dashboard = () => {
   const { cartItems } = useSelector(state => state.cart)
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   CurrentUser()
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const checkTokenExpiration = () => {
+    const storedToken = localStorage.getItem('userToken');
+    if (storedToken) {
+      const { expiration } = JSON.parse(storedToken);
+      const currentTime = new Date().getTime();
+      if (currentTime > expiration) {
+        // Token has expired, log out the user
+        localStorage.removeItem('userToken');
+        // Redirect to the login page or show a logged-out state
+        dispatch(logOut());
+        window.location.href = "/";
+        // history.push('/login');
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Call checkTokenExpiration every sec (1 * 1000 milliseconds)
+    const tokenExpirationInterval = setInterval(checkTokenExpiration, 1 * 1000);
+    // Clean up the interval on component unmount
+    return () => clearInterval(tokenExpirationInterval);
+  }, []);
+
   return (
     <div className='flex'>
       <div className='w-64 min-h-screen bg-orange-400'>
