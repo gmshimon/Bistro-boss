@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from '../../utilis/axios'
+import axiosSecure from "../../utilis/axiosSecure";
 
 const initialState = {
     menu:null,
@@ -35,7 +36,7 @@ export const getMenuLists = createAsyncThunk ("getMenuLists",async ({page,ItemLi
 })
 
 export const addMenuItem = createAsyncThunk ("addMenuItem",async (data)=>{
-    const response = await axios.post('/menu',data,{
+    const response = await axiosSecure.post('/menu',data,{
         headers: {
             'authorization': 'Bearer ' + localStorage.getItem('access_token'),
         },
