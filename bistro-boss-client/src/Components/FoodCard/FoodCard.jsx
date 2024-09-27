@@ -22,7 +22,6 @@ const FoodCard = ({ item }) => {
         price,
         category
       }
-      console.log(cartItem)
       dispatch(addCartItems(cartItem))
       if (isCartCreateSuccess) {
         Swal.fire({

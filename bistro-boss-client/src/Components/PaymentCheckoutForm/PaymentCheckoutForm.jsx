@@ -92,29 +92,43 @@ const dispatch = useDispatch()
   }
   }
   return (
+    <section className='flex justify-center items-center h-screen bg-gray-100'>
+  <div className='w-[500px] p-6 bg-white shadow-lg rounded-lg'>
+    <h2 className='text-center text-2xl font-bold mb-4'>Payment</h2>
     <form onSubmit={handleSubmit}>
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: '16px',
-              color: '#424770',
-              '::placeholder': {
-                color: '#aab7c4'
-              }
+      <div className='border rounded-lg overflow-hidden'>
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: '16px',
+                color: '#424770',
+                '::placeholder': {
+                  color: '#010101FF',
+                },
+                padding: '20px',
+                border: 'none', // Remove default border
+                backgroundColor: '#f9f9f9', // Light background for better contrast
+                transition: 'background-color 0.3s ease', // Smooth transition
+                '&:focus': {
+                  backgroundColor: '#e0f7fa', // Change background on focus
+                },
+              },
+              invalid: {
+                color: '#9e2146',
+              },
             },
-            invalid: {
-              color: '#9e2146'
-            }
-          }
-        }}
-      />
-      <button className='btn btn-sm btn-primary my-4' type='submit'>
+          }}
+        />
+      </div>
+      <button className='btn btn-sm btn-primary my-4 w-full' type='submit'>
         Pay
       </button>
       <p className='text-red-600'>{error}</p>
-      {transactionId && <p className="text-green-600"> Your transaction id: {transactionId}</p>}
+      {transactionId && <p className='text-green-600'>Your transaction id: {transactionId}</p>}
     </form>
+  </div>
+</section>
   )
 }
 
