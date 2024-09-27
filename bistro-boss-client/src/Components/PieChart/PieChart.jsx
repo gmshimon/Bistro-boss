@@ -14,13 +14,13 @@ const PieChart = ({ product }) => {
     '#26a69a',
     '#D10CE8'
   ]
-  const series = count
+  const series = count || []
   const options = {
     chart: {
       width: 380,
       type: 'pie'
     },
-    labels: category,
+    labels: category || [],
     colors: colors,
     responsive: [
       {

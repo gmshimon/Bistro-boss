@@ -5,7 +5,7 @@ const BarChart = ({ sold }) => {
   const ids = sold?.map(item => item._id)
   const totalSold = sold?.map(item => item.totalSold)
 
-  const series = [{ data: totalSold }]
+  const series = [{ data: totalSold || []}]
   const colors = [
     '#008FFB',
     '#00E396',
@@ -38,7 +38,7 @@ const BarChart = ({ sold }) => {
       show: false,
     },
     xaxis: {
-      categories: ids,
+      categories: ids || [],
       labels: {
         style: {
           colors: colors,

@@ -32,7 +32,10 @@ const initialState = {
   isGetUserDataError: false,
   isGetUsersLoading: false,
   isGetUsersSuccess: false,
-  isGetUsersError: false
+  isGetUsersError: false,
+  isAdminDataLoading: false,
+  isAdminDataSuccess: false,
+  isAdminDataError:false
 }
 
 export const saveUserData = async userData => {
@@ -103,7 +106,7 @@ export const getUserDetails = createAsyncThunk('getUserDetails', async () => {
 
 export const getAdminDetails = createAsyncThunk('getAdminDetails', async () => {
   const response = await axiosSecure.get('/user/admin-details')
-  return response.data.data
+  return response?.data?.data
 })
 
 export const logOut = createAsyncThunk('logOut', async () => {
@@ -132,6 +135,9 @@ const AuthSlice = createSlice({
       state.isGetUsersLoading = false
       state.isGetUsersSuccess = false
       state.isGetUsersError = false
+      state.isAdminDataLoading= false
+      state.isAdminDataSuccess= false
+      state.isAdminDataError=false
     },
     startLoading: (state, action) => {
       state.isLoading = action.payload
@@ -238,8 +244,21 @@ const AuthSlice = createSlice({
       .addCase(getUserDetails.fulfilled,(state, action) => {
         state.userDetails = action.payload
       })
+      .addCase(getUserDetails.pending,(state, action) =>{
+        state.isAdminDataLoading= true
+        state.isAdminDataSuccess= false
+        state.isAdminDataError=false
+      })
       .addCase(getAdminDetails.fulfilled, (state, action) => {
+        state.isAdminDataLoading= false
+        state.isAdminDataSuccess= true
+        state.isAdminDataError=false
         state.adminDetails = action.payload
+      })
+      .addCase(getAdminDetails.rejected, (state, action) => {
+        state.isAdminDataLoading= false
+        state.isAdminDataSuccess= false
+        state.isAdminDataError=true
       })
   }
 })

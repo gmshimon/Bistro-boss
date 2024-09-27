@@ -5,7 +5,6 @@ import { IoIosPeople } from 'react-icons/io'
 import { PiPhoneCallLight } from 'react-icons/pi'
 
 const Boxes = ({user,adminDetails}) => {
-  console.log(adminDetails)
   const data = [
     {
       title: 'Menu',
@@ -63,8 +62,8 @@ const Boxes = ({user,adminDetails}) => {
   return (
     <div className='mt-5'>
       <div className='md:flex'>
-        {user?.role == 'admin'?adminData.map(item => (
-          <div key={item?.name} className='w-[220px] md:mr-10 mb-5'>
+        {user?.role == 'admin'?adminData?.map(item => (
+          <div key={item?.title} className='w-[220px] md:mr-10 mb-5'>
             <div
               className={`flex items-center justify-center text-white bg-gradient-to-r ${item?.color1} ${item?.color2} rounded-md  h-[100px]`}
             >

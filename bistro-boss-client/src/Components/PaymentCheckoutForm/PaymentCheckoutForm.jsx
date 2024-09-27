@@ -114,9 +114,6 @@ const dispatch = useDispatch()
                   backgroundColor: '#e0f7fa', // Change background on focus
                 },
               },
-              invalid: {
-                color: '#9e2146',
-              },
             },
           }}
         />
