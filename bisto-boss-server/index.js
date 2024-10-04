@@ -12,7 +12,11 @@ require('dotenv').config()
 const port = process.env.PORT || 5000
 // Middleware
 const app = express()
-app.use(cors())
+app.use(cors({
+  origin: '*', // Allow any origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow necessary HTTP methods
+  credentials: true, // Enable credentials if needed (optional)
+}));
 app.use(express.json())
 
 //bistro_db
