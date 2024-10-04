@@ -58,11 +58,11 @@ const ManageItems = () => {
           }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteMenuItem(id))
-            //   Swal.fire({
-            //     title: "Deleted!",
-            //     text: "Your file has been deleted.",
-            //     icon: "success"
-            //   });
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
             }
           });
     }
@@ -71,9 +71,6 @@ const ManageItems = () => {
             <SectionTItle heading={'Manage All Items'} subHeading={"Hurry up!"} />
             <div>
                 <Table menus={menus} headers={tableHeader} action1={<FaRegEdit/>} action2={<MdDelete/>} button1={handleEditItem} button2={handleDeleteItem}/>
-            </div>
-            <div className='flex justify-center my-4'>
-                <Pagination totalPage={totalPage}/>
             </div>
         </section>
     );

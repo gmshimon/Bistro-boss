@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 
-// eslint-disable-next-line no-unused-vars
+
 // const prod = "https://bistro-boss-fytb.onrender.com/api/v1/"
 const prod = "https://bistro-boss-mauve.vercel.app/api/v1/"
 
@@ -8,7 +9,7 @@ const local = 'http://localhost:5000/api/v1/'
 
 // Create an Axios instance
 const axiosSecure = axios.create({
-  baseURL: prod,
+  baseURL: local,
 });
 
 // Add a request interceptor to include the token in the headers

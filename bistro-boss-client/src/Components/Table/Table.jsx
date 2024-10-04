@@ -1,10 +1,21 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
+import Pagination from '../Paginition/Pagination'
 
 const Table = ({ menus, headers,action1,action2,button1,button2 }) => {
+
+  const itemsPerPage = 5 // Number of items to show per page
+  const totalPages = Math.ceil(menus?.length / itemsPerPage)
+  const [currentPage, setCurrentPage] = useState(1)
+  const handlePageChange = page => {
+    setCurrentPage(page)
+  }
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const cartItems = menus?.slice(indexOfFirstItem, indexOfLastItem)
   return (
     <div>
-      <div className='overflow-x-auto pl-10'>
+      <div className='overflow-x-auto pl-10 h-[405px]'>
         <table className='table'>
           {/* head */}
           <thead className='bg-orange-600 text-white text-1xl'>
@@ -15,7 +26,7 @@ const Table = ({ menus, headers,action1,action2,button1,button2 }) => {
             </tr>
           </thead>
           <tbody>
-            {menus.map((item, index) => (
+            {cartItems.map((item, index) => (
               <tr key={item?._id}>
                 <th>{index + 1}</th>
                 <td>
@@ -54,6 +65,13 @@ const Table = ({ menus, headers,action1,action2,button1,button2 }) => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className='my-5'>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      />
       </div>
     </div>
   )

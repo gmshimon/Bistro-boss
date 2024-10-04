@@ -1,10 +1,14 @@
+import ResponsivePaginationComponent from 'react-responsive-pagination'
+import 'react-responsive-pagination/themes/classic.css'
 
-const Pagination = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-};
+const Pagination = ({ totalPages, currentPage, handlePageChange }) => {
+  return (
+    <ResponsivePaginationComponent
+      total={totalPages}
+      current={currentPage}
+      onPageChange={page => handlePageChange(page)}
+    />
+  )
+}
 
-export default Pagination;
+export default Pagination
