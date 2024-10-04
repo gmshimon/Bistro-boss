@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import axiosSecure from '../../utilis/axiosSecure'
+import axios from '../../utilis/axios'
 
 const initialState = {
   reviews: [],
@@ -14,7 +14,7 @@ const initialState = {
 }
 
 export const getReview = createAsyncThunk('getReview', async () => {
-  const response = await axios.get('http://localhost:5000/api/v1/review')
+  const response = await axios.get('/review')
   return response.data.data
 })
 
