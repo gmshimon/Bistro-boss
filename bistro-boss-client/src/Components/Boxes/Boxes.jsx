@@ -61,9 +61,9 @@ const Boxes = ({user,adminDetails}) => {
   ]
   return (
     <div className='mt-5'>
-      <div className='md:flex'>
+      <div className='flex flex-wrap'>
         {user?.role == 'admin'?adminData?.map(item => (
-          <div key={item?.title} className='w-[220px] md:mr-10 mb-5'>
+          <div key={item?.title} className='w-[260px] mr-10 mb-5'>
             <div
               className={`flex items-center justify-center text-white bg-gradient-to-r ${item?.color1} ${item?.color2} rounded-md  h-[100px]`}
             >

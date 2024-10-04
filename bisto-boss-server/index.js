@@ -17,9 +17,9 @@ app.use(express.json())
 //bistro_db
 //Kola9696
 
-const uri = process.env.URI;
+// const uri = process.env.URI;
 
-// const uri = 'mongodb://localhost:27017/bistroDb'
+const uri = 'mongodb://localhost:27017/bistroDb'
 
 //database connection
 mongoose.connect(uri).then(() => {
