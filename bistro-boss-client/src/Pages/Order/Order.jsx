@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import 'react-tabs/style/react-tabs.css';
+import 'react-tabs/style/react-tabs.css'
 import Cover from '../../Components/Cover/Cover'
 import orderImg from '../../assets/shop/banner2.jpg'
 import { useSelector } from 'react-redux'
@@ -13,16 +13,15 @@ const Order = () => {
   const { menu, desserts, soups, salads, pizzas, drinks } = useSelector(
     state => state.menu
   )
-  const categories = ['Salad', 'Pizza','Soup','Dessert','Drink']
-  const {category} = useParams()
+  const categories = ['Salad', 'Pizza', 'Soup', 'Dessert', 'Drink']
+  const { category } = useParams()
   const initialIndex = categories.indexOf(category)
-  const [tabIndex, setTabIndex] = useState(initialIndex||0)
-  console.log(category);
+  const [tabIndex, setTabIndex] = useState(initialIndex || 0)
   return (
     <div>
       <Cover
         img={orderImg}
-        title={'Our Shoo'}
+        title={'Our Shop'}
         subtitle={'Would you like to try a dish?'}
       />
       <Tabs selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
@@ -34,19 +33,19 @@ const Order = () => {
           <Tab>Drinks</Tab>
         </TabList>
         <TabPanel>
-            <OrderTab items={salads}/>
+          <OrderTab items={salads} />
         </TabPanel>
         <TabPanel>
-        <OrderTab items={pizzas}/>
+          <OrderTab items={pizzas} />
         </TabPanel>
         <TabPanel>
-        <OrderTab items={soups}/>
+          <OrderTab items={soups} />
         </TabPanel>
         <TabPanel>
-        <OrderTab items={desserts}/>
+          <OrderTab items={desserts} />
         </TabPanel>
         <TabPanel>
-        <OrderTab items={drinks}/>
+          <OrderTab items={drinks} />
         </TabPanel>
       </Tabs>
     </div>

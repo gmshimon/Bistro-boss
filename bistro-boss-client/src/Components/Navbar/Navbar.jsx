@@ -43,9 +43,9 @@ const Navbar = () => {
       <li>
         <Link to='/order/Salad'>Order</Link>
       </li>
-      <li>
+      {/* <li>
         <Link to='/secret'>Secret</Link>
-      </li>
+      </li> */}
       {user?.role === 'admin' && (
         <li>
           <Link to='/dashboard/all-user'>Admin</Link>
@@ -117,11 +117,7 @@ const Navbar = () => {
                 <li>
                   <a className='justify-between'>
                     Profile
-                    <span className='badge'>New</span>
                   </a>
-                </li>
-                <li>
-                  <a>Settings</a>
                 </li>
                 <li onClick={() => dispatch(logOut())}>
                   <Link>Logout</Link>

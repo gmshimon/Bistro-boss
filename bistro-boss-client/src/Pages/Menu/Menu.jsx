@@ -34,7 +34,7 @@ const Menu = () => {
       />
       <SectionTItle subHeading={"Don't Miss"} heading={"Today's Offer"} />
       {/* offered item section */}
-      <MenuCategory items={offered} />
+      {/* <MenuCategory items={offered} title={'Salad'}/> */}
       {/* dessert  */}
       <MenuCategory
         items={desserts.slice(0, 5)}

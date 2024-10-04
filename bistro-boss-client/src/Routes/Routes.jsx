@@ -48,10 +48,10 @@ export const router = createBrowserRouter([
         path:"register",
         element:<Registration/>
       },
-      {
-        path:"secret",
-        element:<PrivateRoute><Secret/></PrivateRoute>
-      }
+      // {
+      //   path:"secret",
+      //   element:<PrivateRoute><Secret/></PrivateRoute>
+      // }
     ]
   },
   {
