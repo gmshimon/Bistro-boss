@@ -108,7 +108,7 @@ const Login = () => {
               </div>
               <div>
                 <button
-                  // disabled={disabled}
+                  disabled={disabled}
                   className='btn btn-warning w-full'
                   type='submit'
                 >

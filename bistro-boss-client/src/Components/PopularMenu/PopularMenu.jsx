@@ -4,6 +4,7 @@ import SectionTItle from '../SectionTitle/SectionTItle';
 import MenuItem from '../MenuItem/MenuItem';
 
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const PopularMenu = () => {
     const {menu,popular} = useSelector(state=>state.menu)
@@ -16,7 +17,9 @@ const PopularMenu = () => {
                 }
             </div>
             <div className='flex justify-center mt-5'>
-                <button className='btn btn-outline border-0 border-b-4 mt-4'>View Full Menu</button>
+            <Link to={`/menu`}>
+                <button  className='btn btn-outline border-0 border-b-4 mt-4'>View Full Menu</button>
+            </Link>
             </div>
         </section>
     );
