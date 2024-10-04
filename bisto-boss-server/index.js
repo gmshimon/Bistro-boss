@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const cors = require('cors')
+const cron = require('node-cron');
 var bodyParser = require('body-parser')
 const { query } = require('express')
 require('dotenv').config()
@@ -34,6 +35,8 @@ const paymentRouter = require('./Models/Payment/payment.routes')
 const orderRouter = require('./Models/Order/order.routes')
 const bookingRouter = require('./Models/Booking/booking.routes')
 const tableRouter = require('./Models/Table/table.routes')
+const Booking = require('./Models/Booking/booking.modules');
+const Table = require('./Models/Table/table.modules');
 
 app.use('/api/v1/menu', menuRouter)
 app.use('/api/v1/review', reviewRouter)
@@ -47,6 +50,28 @@ app.use('/api/v1/table',tableRouter)
 app.get('/', (req, res) => {
   res.send('Server is running')
 })
+
+
+cron.schedule('0 0 * * *', async () => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const bookings = await Booking.find({ date: { $lt: today } });
+
+    for (const booking of bookings) {
+      const tableId = booking.table; // Assuming each booking has a 'tableId'
+      
+      // Mark the table as booked
+      await Table.updateOne({ _id: tableId },{
+        $set: { status: 'available' }
+      });
+    }
+
+    console.log('Daily task: Table statuses updated based on current bookings.');
+  } catch (error) {
+    console.error('Error during table status reset:', error);
+  }
+});
 
 
 app.listen(port, () => {
