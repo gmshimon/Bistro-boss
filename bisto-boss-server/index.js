@@ -19,8 +19,6 @@ app.use(cors({
 }));
 app.use(express.json())
 
-//bistro_db
-//Kola9696
 
 const uri = process.env.URI;
 
