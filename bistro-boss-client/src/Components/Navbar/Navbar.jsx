@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { logOut, logout } from '../../Redux/Slice/AuthSlice'
 import { BsCart3 } from 'react-icons/bs'
 
@@ -38,26 +38,26 @@ const Navbar = () => {
   const navOptions = (
     <>
       <li>
-        <Link to='/menu'>Menu</Link>
+        <NavLink to='/menu'>Menu</NavLink>
       </li>
       <li>
-        <Link to='/order/Salad'>Order</Link>
+        <NavLink to='/order/Salad'>Order</NavLink>
       </li>
       {/* <li>
         <Link to='/secret'>Secret</Link>
       </li> */}
       {user?.role === 'admin' && (
         <li>
-          <Link to='/dashboard/all-user'>Admin</Link>
+          <NavLink to='/dashboard/all-user'>Admin</NavLink>
         </li>
       )}
       <li>
-        <Link to='/dashboard/cart'>
+        <NavLink to='/dashboard/cart'>
           {/* <button className='btn'> */}
           <BsCart3 />
           <div className='badge badge-secondary'>+{cartItems?.length}</div>
           {/* </button> */}
-        </Link>
+        </NavLink>
       </li>
     </>
   )
