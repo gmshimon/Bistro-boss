@@ -3,8 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logOut, logout } from '../../Redux/Slice/AuthSlice'
-import { BsCart3 } from "react-icons/bs";
-
+import { BsCart3 } from 'react-icons/bs'
 
 const Navbar = () => {
   const { user } = useSelector(state => state.auth)
@@ -14,28 +13,27 @@ const Navbar = () => {
   //   dispatch(getCartItems(user?.email))
   // },[dispatch, user?.email])
 
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const checkTokenExpiration = () => {
-      const storedToken = localStorage.getItem('userToken');
-      if (storedToken) {
-        const { expiration } = JSON.parse(storedToken);
-        const currentTime = new Date().getTime();
-        if (currentTime > expiration) {
-          // Token has expired, log out the user
-          localStorage.removeItem('userToken');
-          // Redirect to the login page or show a logged-out state
-          dispatch(logOut());
-        }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const checkTokenExpiration = () => {
+    const storedToken = localStorage.getItem('userToken')
+    if (storedToken) {
+      const { expiration } = JSON.parse(storedToken)
+      const currentTime = new Date().getTime()
+      if (currentTime > expiration) {
+        // Token has expired, log out the user
+        localStorage.removeItem('userToken')
+        // Redirect to the login page or show a logged-out state
+        dispatch(logOut())
       }
-    };
-  
-    useEffect(() => {
-      // Call checkTokenExpiration every sec (1 * 1000 milliseconds)
-      const tokenExpirationInterval = setInterval(checkTokenExpiration, 1 * 1000);
-      // Clean up the interval on component unmount
-      return () => clearInterval(tokenExpirationInterval);
-    }, []);
+    }
+  }
+
+  useEffect(() => {
+    // Call checkTokenExpiration every sec (1 * 1000 milliseconds)
+    const tokenExpirationInterval = setInterval(checkTokenExpiration, 1 * 1000)
+    // Clean up the interval on component unmount
+    return () => clearInterval(tokenExpirationInterval)
+  }, [])
 
   const navOptions = (
     <>
@@ -48,20 +46,20 @@ const Navbar = () => {
       <li>
         <Link to='/secret'>Secret</Link>
       </li>
-      {
-        user?.role==="admin" && <li>
-        <Link to='/dashboard/all-user'>Admin</Link>
-      </li>
-      }
+      {user?.role === 'admin' && (
+        <li>
+          <Link to='/dashboard/all-user'>Admin</Link>
+        </li>
+      )}
       <li>
         <Link to='/dashboard/cart'>
           {/* <button className='btn'> */}
           <BsCart3 />
-            <div className='badge badge-secondary'>+{cartItems?.length}</div>
+          <div className='badge badge-secondary'>+{cartItems?.length}</div>
           {/* </button> */}
         </Link>
       </li>
-      {user?.email ? (
+      {/* {user?.email ? (
         <li onClick={() => dispatch(logOut())}>
           <Link>Logout</Link>
         </li>
@@ -69,7 +67,7 @@ const Navbar = () => {
         <li>
           <Link to='/login'>Login</Link>
         </li>
-      )}
+      )} */}
     </>
   )
   return (
@@ -102,7 +100,43 @@ const Navbar = () => {
           <ul className='menu menu-horizontal px-1'>{navOptions}</ul>
         </div>
         <div className='navbar-end'>
-          <a className='btn'>Button</a>
+          {user?.email ? (
+            <div className='dropdown dropdown-end'>
+              <div
+                tabIndex={0}
+                role='button'
+                className='btn btn-ghost btn-circle avatar'
+              >
+                <div className='w-10 rounded-full'>
+                  <img
+                    alt='Tailwind CSS Navbar component'
+                    src='https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
+                  />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className='menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-black'
+              >
+                <li>
+                  <a className='justify-between'>
+                    Profile
+                    <span className='badge'>New</span>
+                  </a>
+                </li>
+                <li>
+                  <a>Settings</a>
+                </li>
+                <li onClick={() => dispatch(logOut())}>
+                  <Link>Logout</Link>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <li className='list-none'>
+              <Link to='/login'>Login</Link>
+            </li>
+          )}
         </div>
       </div>
     </>
